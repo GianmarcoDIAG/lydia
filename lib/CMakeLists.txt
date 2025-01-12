@@ -27,7 +27,10 @@ ADD_FLEX_BISON_DEPENDENCY(LTLfLydiaLexer LTLfLydiaParser)
 FLEX_TARGET(LDLfLydiaLexer include/lydia/parser/ldlf/lexer.l ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ldlf/lexer.yy.cc)
 BISON_TARGET(LDLfLydiaParser include/lydia/parser/ldlf/parser.yy ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ldlf/parser.tab.cc )
 ADD_FLEX_BISON_DEPENDENCY(LDLfLydiaLexer LDLfLydiaParser)
-
+# LTLf+ (Gianmarco)
+FLEX_TARGET(LTLfPlusLydiaLexer include/lydia/parser/ltlfplus/lexer.l ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ltlfplus/lexer.yy.cc)
+BISON_TARGET(LTLfPlusLydiaParser include/lydia/parser/ltlfplus/parser.yy ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ltlfplus/parser.tab.cc )
+ADD_FLEX_BISON_DEPENDENCY(LTLfPlusLydiaLexer LTLfPlusLydiaParser)
 
 #configure directories
 set (LIBRARY_MODULE_PATH "${PROJECT_SOURCE_DIR}/lib")
@@ -50,7 +53,10 @@ add_library (${LIB_NAME}
         ${BISON_LTLfLydiaParser_OUTPUTS}
         ${BISON_LDLfLydiaParser_OUTPUTS}
         ${FLEX_LTLfLydiaLexer_OUTPUTS}
-        ${FLEX_LDLfLydiaLexer_OUTPUTS})
+        ${FLEX_LDLfLydiaLexer_OUTPUTS}
+        ${BISON_LTLfPlusLydiaParser_OUTPUTS}
+        ${FLEX_LTLfPlusLydiaLexer_OUTPUTS}
+        )
 
 target_link_libraries(${LIB_NAME}
         ${CUDD_LIBRARIES}
