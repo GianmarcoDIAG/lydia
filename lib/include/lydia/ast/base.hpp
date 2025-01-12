@@ -51,6 +51,8 @@ private:
   ltlf_ptr ltlf_not_end_;
   ldlf_ptr ldlf_true_;
   ldlf_ptr ldlf_false_;
+  ltlf_plus_ptr ltlf_plus_true_;
+  ltlf_plus_ptr ltlf_plus_false_;
   std::unordered_set<basic_ptr, compute_hash, ast_eq_proc> table;
   void init();
 
@@ -119,6 +121,17 @@ public:
   regex_ptr makeUnionRegex(const set_regex& ptr);
   regex_ptr makeStarRegex(const regex_ptr& ptr);
   regex_ptr makeTestRegex(const ldlf_ptr& ptr);
+
+  ltlf_plus_ptr makeLtlfPlusBool(bool x); 
+  ltlf_plus_ptr makeLtlfPlusTrue();
+  ltlf_plus_ptr makeLtlfPlusFalse();
+  ltlf_plus_ptr makeLtlfPlusAnd(const set_ltlf_plus_formulas& args);
+  ltlf_plus_ptr makeLtlfPlusOr(const set_ltlf_plus_formulas& args);
+  ltlf_plus_ptr makeLtlfPlusNot(const ltlf_plus_ptr& arg);
+  ltlf_plus_ptr makeLtlfPlusExists(const ltlf_ptr& arg);
+  ltlf_plus_ptr makeLtlfPlusForall(const ltlf_ptr& arg);
+  ltlf_plus_ptr makeLtlfPlusForallExists(const ltlf_ptr& arg);
+  ltlf_plus_ptr makeLtlfPlusExistsForall(const ltlf_ptr& arg);
 };
 
 class Ast : public Basic {

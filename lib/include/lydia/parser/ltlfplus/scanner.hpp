@@ -16,15 +16,8 @@
  * along with Lydia.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace whitemech::lydia {
+#define yyFlexLexer ltlfPlusFlexLexer
+#include <FlexLexer.h>
+#undef yyFlexLexer
 
-template <typename Logic> class AbstractDriver {
-public:
-  std::shared_ptr<AstManager> context = nullptr;
-  AbstractDriver() : context{std::make_shared<AstManager>()} {}
-  AbstractDriver(std::shared_ptr<AstManager> c) : context{std::move(c)} {}
-  virtual void parse(const char* const filename) = 0;
-  virtual void parse(std::istream& iss) = 0;
-  virtual std::shared_ptr<const Logic> get_result() = 0;
-};
-} // namespace whitemech::lydia
+#include "scanner_internal.hpp"

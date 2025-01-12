@@ -20,6 +20,7 @@
 #include <lydia/logic/nnf.hpp>
 #include <lydia/logic/pl/base.hpp>
 #include <lydia/visitor.hpp>
+#include <lydia/logic/ltlfplus/base.hpp>
 
 namespace whitemech::lydia {
 
@@ -31,6 +32,20 @@ protected:
   std::string result;
 
 public:
+  // callbacks for LTLf
+  void visit(const LTLfTrue&) override;
+  void visit(const LTLfFalse&) override;
+  void visit(const LTLfAtom&) override;
+  void visit(const LTLfAnd&) override;
+  void visit(const LTLfOr&) override;
+  void visit(const LTLfNot&) override;
+  void visit(const LTLfNext&) override;
+  void visit(const LTLfWeakNext&) override;
+  void visit(const LTLfUntil&) override;
+  void visit(const LTLfRelease&) override;
+  void visit(const LTLfEventually&) override;
+  void visit(const LTLfAlways&) override;
+
   // callbacks for LDLf
   void visit(const Symbol&) override;
   void visit(const LDLfTrue&) override;
@@ -57,6 +72,17 @@ public:
   void visit(const PropositionalNot&) override;
 
   void visit(const QuotedFormula&) override{};
+
+  // callbacks for LTLf+
+  void visit(const LTLfPlusTrue&) override;
+  void visit(const LTLfPlusFalse&) override;
+  void visit(const LTLfPlusAnd&) override;
+  void visit(const LTLfPlusOr&) override;
+  void visit(const LTLfPlusNot&) override;
+  void visit(const LTLfPlusExists&) override;
+  void visit(const LTLfPlusForall&) override;
+  void visit(const LTLfPlusExistsForall&) override;
+  void visit(const LTLfPlusForallExists&) override;
 
   std::string apply(const vec_basic& v);
   std::string apply(const set_formulas& v);
