@@ -30,13 +30,15 @@ void NegationTransformer::visit(const LTLfFalse& formula) {
 }
 
 void NegationTransformer::visit(const LTLfAtom& formula) {
-  //  nnf(~a) = !a | end
+  // (Marco) nnf(~a) = !a | end
+  // (Gianmarco) for LTLf+, we need to drop the end part (?)
+  // For now we keep it like this...
   auto& context = formula.ctx();
   auto atom = context.makeLtlfAtom(formula.symbol);
-  auto not_atom = context.makeLtlfNot(atom);
-  auto end = context.makeLtlfEnd();
-
-  result = context.makeLtlfOr(set_ltlf_formulas{not_atom, end});
+  // auto not_atom = context.makeLtlfNot(atom);
+  // auto end = context.makeLtlfEnd();
+  // result = context.makeLtlfOr(set_ltlf_formulas{not_atom, end});
+  result = context.makeLtlfNot(atom);
 }
 
 void NegationTransformer::visit(const LTLfNot& formula) {

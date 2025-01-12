@@ -21,6 +21,74 @@
 
 namespace whitemech::lydia {
 
+void StrPrinter::visit(const LTLfTrue& x) { result =  "tt"; }
+void StrPrinter::visit(const LTLfFalse& x) { result = "ff"; }
+void StrPrinter::visit(const LTLfAtom& x) { result = (*x.symbol).get_name(); }
+void StrPrinter::visit(const LTLfAnd& x) {
+  std::ostringstream s;
+  auto container = x.get_container();
+  s << "(";
+  s << apply(**container.begin());
+  for (auto it = ++(container.begin()); it != container.end(); ++it) {
+    s << " & " << apply(**it);
+  }
+  s << ")";
+  result = s.str();
+}
+void StrPrinter::visit(const LTLfOr& x) {
+  std::ostringstream s;
+  auto container = x.get_container();
+  s << "(";
+  s << apply(**container.begin());
+  for (auto it = ++(container.begin()); it != container.end(); ++it) {
+    s << " | " << apply(**it);
+  }
+  s << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfNot& x) {
+  std::ostringstream s;
+  s << "!(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfNext& x) {
+  std::ostringstream s;
+  s << "X[!](" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfWeakNext& x) {
+  std::ostringstream s;
+  s << "X(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfUntil& x) {
+  std::ostringstream s;
+  s << "(" << apply(*x.head()) << ") U (" << apply(*x.tail()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfRelease& x) {
+  std::ostringstream s;
+  s << "(" << apply(*x.head()) << ") R (" << apply(*x.tail()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfEventually& x) {
+  std::ostringstream s;
+  s << "F(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfAlways& x) {
+  std::ostringstream s;
+  s << "G(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
 void StrPrinter::visit(const Symbol& x) { result = x.get_name(); }
 
 void StrPrinter::visit(const LDLfTrue& x) { result = "tt"; }
@@ -151,6 +219,63 @@ void StrPrinter::visit(const PropositionalNot& x) {
 std::string StrPrinter::apply(const Basic& b) {
   b.accept(*this);
   return result;
+}
+
+void StrPrinter::visit(const LTLfPlusTrue& x) { result = "tt"; }
+void StrPrinter::visit(const LTLfPlusFalse& x) { result = "ff"; }
+
+void StrPrinter::visit(const LTLfPlusAnd& x) {
+  std::ostringstream s;
+  auto container = x.get_container();
+  s << "(";
+  s << apply(**container.begin());
+  for (auto it = ++(container.begin()); it != container.end(); ++it) {
+    s << " & " << apply(**it);
+  }
+  s << ")";
+  result = s.str();
+} 
+
+void StrPrinter::visit(const LTLfPlusOr& x) {
+  std::ostringstream s;
+  auto container = x.get_container();
+  s << "(";
+  s << apply(**container.begin());
+  for (auto it = ++(container.begin()); it != container.end(); ++it) {
+    s << " | " << apply(**it);
+  }
+  s << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfPlusNot& x) {
+  std::ostringstream s;
+  s << "!(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfPlusExists& x) {
+  std::ostringstream s;
+  s << "E(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfPlusForall& x) {
+  std::ostringstream s;
+  s << "A(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfPlusForallExists& x) {
+  std::ostringstream s;
+  s << "AE(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const LTLfPlusExistsForall& x) {
+  std::ostringstream s;
+  s << "EA(" << apply(*x.get_arg()) << ")";
+  result = s.str();
 }
 
 std::string StrPrinter::apply(const vec_basic& v) {

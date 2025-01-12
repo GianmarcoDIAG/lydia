@@ -17,6 +17,7 @@
 
 #include <lydia/logic/ldlf/base.hpp>
 #include <lydia/logic/ltlf/base.hpp>
+#include <lydia/logic/ltlfplus/base.hpp>
 #include <lydia/logic/pl/base.hpp>
 #include <lydia/visitor.hpp>
 
@@ -49,6 +50,16 @@ void TestRegExp::accept(Visitor& v) const { v.visit(*this); }
 void UnionRegExp::accept(Visitor& v) const { v.visit(*this); }
 void SequenceRegExp::accept(Visitor& v) const { v.visit(*this); }
 void StarRegExp::accept(Visitor& v) const { v.visit(*this); }
+
+void LTLfPlusTrue::accept(Visitor& v) const { v.visit(*this); }
+void LTLfPlusFalse::accept(Visitor& v) const { v.visit(*this); }
+void LTLfPlusAnd::accept(Visitor& v) const {v.visit(*this); }
+void LTLfPlusOr::accept(Visitor& v) const {v.visit(*this); }
+void LTLfPlusNot::accept(Visitor& v) const {v.visit(*this); }
+void LTLfPlusExists::accept(Visitor& v) const {v.visit(*this); }
+void LTLfPlusForall::accept(Visitor& v) const {v.visit(*this); }
+void LTLfPlusExistsForall::accept(Visitor& v) const {v.visit(*this); }
+void LTLfPlusForallExists::accept(Visitor& v) const {v.visit(*this); }
 
 // TODO add other accept methods
 
