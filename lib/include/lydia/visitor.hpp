@@ -66,6 +66,17 @@ public:
   virtual void visit(const LDLfF&){};
   virtual void visit(const LDLfT&){};
   virtual void visit(const LDLfQ&){};
+
+  // callbacks for LTLf+
+  virtual void visit(const LTLfPlusTrue&){};
+  virtual void visit(const LTLfPlusFalse&){};
+  virtual void visit(const LTLfPlusAnd&){};
+  virtual void visit(const LTLfPlusOr&){};
+  virtual void visit(const LTLfPlusNot&){};
+  virtual void visit(const LTLfPlusExists&){};
+  virtual void visit(const LTLfPlusForall&){};
+  virtual void visit(const LTLfPlusExistsForall&){};
+  virtual void visit(const LTLfPlusForallExists&){};
 };
 
 } // namespace whitemech::lydia

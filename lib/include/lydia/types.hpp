@@ -75,6 +75,16 @@ class DFATransition;
 class dfa;
 class abstract_dfa;
 class BDDStrategy;
+class LTLfPlusFormula;
+class LTLfPlusTrue;
+class LTLfPlusFalse;
+class LTLfPlusAnd;
+class LTLfPlusOr;
+class LTLfPlusNot;
+class LTLfPlusExists;
+class LTLfPlusForall;
+class LTLfPlusExistsForall;
+class LTLfPlusForallExists;
 
 struct SharedComparator {
   template <typename T>
@@ -102,10 +112,14 @@ typedef std::set<std::shared_ptr<const Basic>, SharedComparator> set_basic;
 typedef std::shared_ptr<const Ast> ast_ptr;
 typedef std::shared_ptr<const LDLfFormula> ldlf_ptr;
 typedef std::shared_ptr<const LTLfFormula> ltlf_ptr;
+typedef std::shared_ptr<const LTLfPlusFormula> ltlf_plus_ptr;
 typedef std::vector<std::shared_ptr<const LTLfFormula>> vec_ltlf_formulas;
 typedef std::vector<std::shared_ptr<const LDLfFormula>> vec_ldlf_formulas;
+typedef std::vector<std::shared_ptr<const LTLfPlusFormula>> vec_ltlf_plus_formulas;
 typedef std::set<std::shared_ptr<const LTLfFormula>, SharedComparator>
     set_ltlf_formulas;
+typedef std::set<std::shared_ptr<const LTLfPlusFormula>, SharedComparator>
+  set_ltlf_plus_formulas;
 typedef std::vector<std::shared_ptr<const LDLfFormula>> vec_formulas;
 typedef std::set<std::shared_ptr<const LDLfFormula>, SharedComparator>
     set_formulas;
