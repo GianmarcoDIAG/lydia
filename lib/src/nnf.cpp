@@ -16,6 +16,7 @@
  */
 
 #include <lydia/logic/ltlf/duality.hpp>
+#include <lydia/logic/ppltl/duality.hpp>
 #include <lydia/logic/nnf.hpp>
 
 namespace whitemech::lydia {
@@ -24,12 +25,24 @@ void NNFTransformer::visit(const LTLfTrue& x) {
   ltlf_result = x.ctx().makeLtlfTrue();
 }
 
+void NNFTransformer::visit(const PPLTLTrue& x) {
+  ppltl_result = x.ctx().makePPLTLTrue();
+}
+
 void NNFTransformer::visit(const LTLfFalse& x) {
   ltlf_result = x.ctx().makeLtlfFalse();
 }
 
+void NNFTransformer::visit(const PPLTLFalse& x) {
+  ppltl_result = x.ctx().makePPLTLFalse();
+}
+
 void NNFTransformer::visit(const LTLfAtom& x) {
   ltlf_result = x.ctx().makeLtlfAtom(x.symbol);
+}
+
+void NNFTransformer::visit(const PPLTLAtom& x) {
+  ppltl_result = x.ctx().makePPLTLAtom(x.symbol);
 }
 
 void NNFTransformer::visit(const LTLfAnd& x) {
@@ -41,6 +54,15 @@ void NNFTransformer::visit(const LTLfAnd& x) {
   ltlf_result = x.ctx().makeLtlfAnd(new_container);
 }
 
+void NNFTransformer::visit(const PPLTLAnd& x) {
+  auto container = x.get_container();
+  set_ppltl_formulas new_container;
+  for (auto& a : container) {
+    new_container.insert(apply(*a));
+  }
+  ppltl_result = x.ctx().makePPLTLAnd(new_container);
+}
+
 void NNFTransformer::visit(const LTLfOr& x) {
   auto container = x.get_container();
   set_ltlf_formulas new_container;
@@ -48,6 +70,15 @@ void NNFTransformer::visit(const LTLfOr& x) {
     new_container.insert(apply(*a));
   }
   ltlf_result = x.ctx().makeLtlfOr(new_container);
+}
+
+void NNFTransformer::visit(const PPLTLOr& x) {
+  auto container = x.get_container();
+  set_ppltl_formulas new_container;
+  for (auto& a : container) {
+    new_container.insert(apply(*a));
+  }
+  ppltl_result = x.ctx().makePPLTLOr(new_container);
 }
 
 void NNFTransformer::visit(const LTLfNot& x) {
@@ -58,12 +89,28 @@ void NNFTransformer::visit(const LTLfNot& x) {
   }
 }
 
+void NNFTransformer::visit(const PPLTLNot& x) {
+  if (is_a<const PPLTLAtom>(*x.get_arg())) {
+    ppltl_result = x.ctx().makePPLTLNot(x.get_arg());
+  } else {
+    ppltl_result = apply_negation(*x.get_arg());
+  }
+}
+
 void NNFTransformer::visit(const LTLfNext& x) {
   ltlf_result = x.ctx().makeLtlfNext(apply(*x.get_arg()));
 }
 
+void NNFTransformer::visit(const PPLTLYesterday& x) {
+  ppltl_result = x.ctx().makePPLTLYesterday(apply(*x.get_arg()));
+}
+
 void NNFTransformer::visit(const LTLfWeakNext& x) {
   ltlf_result = x.ctx().makeLtlfWeakNext(apply(*x.get_arg()));
+}
+
+void NNFTransformer::visit(const PPLTLWeakYesterday& x) {
+  ppltl_result = x.ctx().makePPLTLWeakYesterday(apply(*x.get_arg()));
 }
 
 void NNFTransformer::visit(const LTLfUntil& x) {
@@ -72,10 +119,22 @@ void NNFTransformer::visit(const LTLfUntil& x) {
   ltlf_result = x.ctx().makeLtlfUntil(arg1, arg2);
 }
 
+void NNFTransformer::visit(const PPLTLSince& x) {
+  auto arg1 = apply(*x.get_args()[0]);
+  auto arg2 = apply(*x.get_args()[1]);
+  ppltl_result = x.ctx().makePPLTLSince(arg1, arg2);
+}
+
 void NNFTransformer::visit(const LTLfRelease& x) {
   auto arg1 = apply(*x.get_args()[0]);
   auto arg2 = apply(*x.get_args()[1]);
   ltlf_result = x.ctx().makeLtlfRelease(arg1, arg2);
+}
+
+void NNFTransformer::visit(const PPLTLTriggered& x) {
+  auto arg1 = apply(*x.get_args()[0]);
+  auto arg2 = apply(*x.get_args()[1]);
+  ppltl_result = x.ctx().makePPLTLTriggered(arg1, arg2);
 }
 
 void NNFTransformer::visit(const LTLfEventually& x) {
@@ -83,9 +142,19 @@ void NNFTransformer::visit(const LTLfEventually& x) {
   ltlf_result = x.ctx().makeLtlfEventually(arg);
 }
 
+void NNFTransformer::visit(const PPLTLOnce& x) {
+  auto arg = apply(*x.get_arg());
+  ppltl_result = x.ctx().makePPLTLOnce(arg);
+}
+
 void NNFTransformer::visit(const LTLfAlways& x) {
   auto arg = apply(*x.get_arg());
   ltlf_result = x.ctx().makeLtlfAlways(arg);
+}
+
+void NNFTransformer::visit(const PPLTLHistorically& x) {
+  auto arg = apply(*x.get_arg());
+  ppltl_result = x.ctx().makePPLTLHistorically(arg);
 }
 
 void NNFTransformer::visit(const LDLfTrue& x) {
@@ -189,6 +258,11 @@ ltlf_ptr NNFTransformer::apply(const LTLfFormula& b) {
   return ltlf_result;
 }
 
+ppltl_ptr NNFTransformer::apply(const PPLTLFormula& b) {
+  b.accept(*this);
+  return ppltl_result;
+}
+
 ldlf_ptr NNFTransformer::apply(const LDLfFormula& b) {
   b.accept(*this);
   return result;
@@ -210,6 +284,11 @@ std::shared_ptr<const LDLfFormula> to_nnf(const LDLfFormula& x) {
 }
 
 std::shared_ptr<const LTLfFormula> to_nnf(const LTLfFormula& x) {
+  NNFTransformer nnfTransformer;
+  return nnfTransformer.apply(x);
+}
+
+std::shared_ptr<const PPLTLFormula> to_nnf(const PPLTLFormula& x) {
   NNFTransformer nnfTransformer;
   return nnfTransformer.apply(x);
 }

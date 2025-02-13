@@ -49,6 +49,11 @@ private:
   ltlf_ptr ltlf_last_;
   ltlf_ptr ltlf_end_;
   ltlf_ptr ltlf_not_end_;
+  ppltl_ptr ppltl_true_;
+  ppltl_ptr ppltl_false_;
+  ppltl_ptr ppltl_first_;
+  ppltl_ptr ppltl_end_;
+  ppltl_ptr ppltl_not_end_;
   ldlf_ptr ldlf_true_;
   ldlf_ptr ldlf_false_;
   ltlf_plus_ptr ltlf_plus_true_;
@@ -101,6 +106,24 @@ public:
   ltlf_ptr makeLtlfRelease(const ltlf_ptr& arg_1, const ltlf_ptr& arg_2);
   ltlf_ptr makeLtlfEventually(const ltlf_ptr& arg);
   ltlf_ptr makeLtlfAlways(const ltlf_ptr& arg);
+
+  ppltl_ptr makePPLTLTrue();
+  ppltl_ptr makePPLTLFalse();
+  ppltl_ptr makePPLTLFirst();
+  ppltl_ptr makePPLTLEnd();
+  ppltl_ptr makePPLTLNotEnd();
+  ppltl_ptr makePPLTLBool(bool x);
+  ppltl_ptr makePPLTLAtom(const std::string& name);
+  ppltl_ptr makePPLTLAtom(const symbol_ptr& symbol);
+  ppltl_ptr makePPLTLAnd(const set_ppltl_formulas& args);
+  ppltl_ptr makePPLTLOr(const set_ppltl_formulas& args);
+  ppltl_ptr makePPLTLNot(const ppltl_ptr& arg);
+  ppltl_ptr makePPLTLYesterday(const ppltl_ptr& arg);
+  ppltl_ptr makePPLTLWeakYesterday(const ppltl_ptr& arg);
+  ppltl_ptr makePPLTLSince(const ppltl_ptr& arg_1, const ppltl_ptr& arg_2);
+  ppltl_ptr makePPLTLTriggered(const ppltl_ptr& arg_1, const ppltl_ptr& arg_2);
+  ppltl_ptr makePPLTLOnce(const ppltl_ptr& arg);
+  ppltl_ptr makePPLTLHistorically(const ppltl_ptr& arg);
 
   ldlf_ptr makeLdlfTrue();
   ldlf_ptr makeLdlfFalse();

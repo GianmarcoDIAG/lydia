@@ -17,6 +17,7 @@
 
 #include <lydia/logic/ldlf/base.hpp>
 #include <lydia/logic/ltlf/base.hpp>
+#include <lydia/logic/ppltl/base.hpp>
 #include <lydia/logic/ltlfplus/base.hpp>
 #include <lydia/logic/pl/base.hpp>
 #include <lydia/visitor.hpp>
@@ -36,6 +37,19 @@ void LTLfUntil::accept(Visitor& v) const { v.visit(*this); }
 void LTLfRelease::accept(Visitor& v) const { v.visit(*this); }
 void LTLfEventually::accept(Visitor& v) const { v.visit(*this); }
 void LTLfAlways::accept(Visitor& v) const { v.visit(*this); }
+
+void PPLTLTrue::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLFalse::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLOr::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLAnd::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLAtom::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLNot::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLYesterday::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLWeakYesterday::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLSince::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLTriggered::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLOnce::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLHistorically::accept(Visitor& v) const { v.visit(*this); }
 
 void LDLfTrue::accept(Visitor& v) const { v.visit(*this); }
 void LDLfFalse::accept(Visitor& v) const { v.visit(*this); }

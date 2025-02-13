@@ -70,7 +70,19 @@ enum TypeID {
   t_LTLfPlusExists,
   t_LTLfPlusForall,
   t_LTLfPlusExistsForall,
-  t_LTLfPlusForallExists
+  t_LTLfPlusForallExists,
+  t_PPLTLTrue,
+  t_PPLTLFalse,
+  t_PPLTLAtom,
+  t_PPLTLAnd,
+  t_PPLTLOr,
+  t_PPLTLNot,
+  t_PPLTLYesterday,
+  t_PPLTLWeakYesterday,
+  t_PPLTLSince,
+  t_PPLTLTriggered,
+  t_PPLTLOnce,
+  t_PPLTLHistorically,
 };
 
 class Visitor;

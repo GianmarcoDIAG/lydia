@@ -111,12 +111,13 @@ int main(int argc, char** argv) {
   auto dfa_strategy = whitemech::lydia::CompositionalStrategy();
   auto translator = whitemech::lydia::Translator(dfa_strategy);
 
-  std::shared_ptr<whitemech::lydia::AbstractDriver> driver;
-  if (logic == Logic::ldlf) {
-    driver = std::make_shared<whitemech::lydia::parsers::ldlf::Driver>();
-  } else if (logic == Logic::ltlf) {
-    driver = std::make_shared<whitemech::lydia::parsers::ltlf::LTLfDriver>();
-  }
+  auto driver = std::make_shared<whitemech::lydia::parsers::ltlf::LTLfDriver>();
+  //  std::shared_ptr<whitemech::lydia::AbstractDriver> driver;
+  //  if (logic == Logic::ldlf) {
+  //    driver = std::make_shared<whitemech::lydia::parsers::ldlf::Driver>();
+  //  } else if (logic == Logic::ltlf) {
+  //    driver = std::make_shared<whitemech::lydia::parsers::ltlf::LTLfDriver>();
+  //  }
 
   if (!file_opt->empty()) {
     std::filesystem::path formula_path(filename);

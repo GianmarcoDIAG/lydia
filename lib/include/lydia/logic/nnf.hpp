@@ -16,6 +16,9 @@
  * along with Lydia.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "ppltl/base.hpp"
+
+
 #include <lydia/logic/ldlf/base.hpp>
 #include <lydia/logic/ltlf/base.hpp>
 #include <lydia/logic/pl/base.hpp>
@@ -31,6 +34,7 @@ protected:
   ldlf_ptr result;
   regex_ptr regex_result;
   prop_ptr prop_result;
+  ppltl_ptr ppltl_result;
 
 public:
   // callbacks for LTLf
@@ -46,6 +50,20 @@ public:
   void visit(const LTLfRelease&) override;
   void visit(const LTLfEventually&) override;
   void visit(const LTLfAlways&) override;
+
+  // callbacks for PPLTL
+  void visit(const PPLTLTrue&) override;
+  void visit(const PPLTLFalse&) override;
+  void visit(const PPLTLAtom&) override;
+  void visit(const PPLTLAnd&) override;
+  void visit(const PPLTLOr&) override;
+  void visit(const PPLTLNot&) override;
+  void visit(const PPLTLYesterday&) override;
+  void visit(const PPLTLWeakYesterday&) override;
+  void visit(const PPLTLSince&) override;
+  void visit(const PPLTLTriggered&) override;
+  void visit(const PPLTLOnce&) override;
+  void visit(const PPLTLHistorically&) override;
 
   // callbacks for LDLf
   void visit(const Symbol&) override{};
@@ -80,9 +98,11 @@ public:
   ltlf_ptr apply(const LTLfFormula& b);
   regex_ptr apply(const RegExp& b);
   prop_ptr apply(const PropositionalFormula& b);
+  ppltl_ptr apply(const PPLTLFormula& b);
 };
 
 std::shared_ptr<const LDLfFormula> to_nnf(const LDLfFormula&);
 std::shared_ptr<const LTLfFormula> to_nnf(const LTLfFormula&);
+std::shared_ptr<const PPLTLFormula> to_nnf(const PPLTLFormula&);
 
 } // namespace whitemech::lydia

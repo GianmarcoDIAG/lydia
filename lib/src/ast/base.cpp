@@ -18,6 +18,7 @@
 #include <lydia/ast/base.hpp>
 #include <lydia/logic/ldlf/base.hpp>
 #include <lydia/logic/ltlf/base.hpp>
+#include <lydia/logic/ppltl/base.hpp>
 #include <lydia/logic/pl/base.hpp>
 
 namespace whitemech::lydia {
@@ -32,12 +33,20 @@ void AstManager::init() {
   ltlf_not_end_ = std::make_shared<const LTLfEventually>(*this, ltlf_true_);
   ldlf_true_ = std::make_shared<const LDLfTrue>(*this);
   ldlf_false_ = std::make_shared<const LDLfFalse>(*this);
+  ppltl_true_ = std::make_shared<const PPLTLTrue>(*this);
+  ppltl_false_ = std::make_shared<const PPLTLFalse>(*this);
+  // TODO: Check with Giuseppe
+  ppltl_first_ = std::make_shared<const PPLTLWeakYesterday>(*this, ppltl_false_);
+  ppltl_end_ = std::make_shared<const PPLTLHistorically>(*this, ppltl_false_);
+  ppltl_not_end_ = std::make_shared<const PPLTLOnce>(*this, ppltl_true_);
   this->table.insert(prop_true_);
   this->table.insert(prop_false_);
   this->table.insert(ltlf_true_);
   this->table.insert(ltlf_false_);
   this->table.insert(ldlf_true_);
   this->table.insert(ldlf_false_);
+  this->table.insert(ppltl_true_);
+  this->table.insert(ppltl_false_);
 }
 
 } // namespace whitemech::lydia

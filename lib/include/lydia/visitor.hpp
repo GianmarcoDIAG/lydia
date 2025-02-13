@@ -37,6 +37,20 @@ public:
   virtual void visit(const LTLfEventually&){};
   virtual void visit(const LTLfAlways&){};
 
+  // callbacks for PPLTL
+  virtual void visit(const PPLTLTrue&){};
+  virtual void visit(const PPLTLFalse&){};
+  virtual void visit(const PPLTLAtom&){};
+  virtual void visit(const PPLTLAnd&){};
+  virtual void visit(const PPLTLOr&){};
+  virtual void visit(const PPLTLNot&){};
+  virtual void visit(const PPLTLYesterday&){};
+  virtual void visit(const PPLTLWeakYesterday&){};
+  virtual void visit(const PPLTLSince&){};
+  virtual void visit(const PPLTLTriggered&){};
+  virtual void visit(const PPLTLOnce&){};
+  virtual void visit(const PPLTLHistorically&){};
+
   // callbacks for LDLf
   virtual void visit(const LDLfTrue&){};
   virtual void visit(const LDLfFalse&){};
