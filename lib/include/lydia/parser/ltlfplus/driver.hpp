@@ -33,7 +33,7 @@
 
 namespace whitemech::lydia::parsers::ltlfplus {
 
-    class LTLfPlusDriver : public AbstractDriver<LTLfPlusFormula> {
+    class LTLfPlusDriver : public AbstractDriver {
         private:
             void parse_helper(std::istream& stream);
 
@@ -46,7 +46,7 @@ namespace whitemech::lydia::parsers::ltlfplus {
             explicit LTLfPlusDriver(std::shared_ptr<AstManager> c): 
                 AbstractDriver(c) {}
             virtual ~LTLfPlusDriver();
-            ltlf_plus_ptr get_result() override {return result;}
+            ast_ptr get_result() override {return result;}
             void parse(const char* const filename) override;
             void parse(std::istream& iss);
 
