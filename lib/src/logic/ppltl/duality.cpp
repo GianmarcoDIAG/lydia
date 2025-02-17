@@ -109,7 +109,7 @@ ppltl_ptr PurePastNegationTransformer::apply(const PPLTLFormula& f) {
 }
 
 ppltl_ptr apply_negation(const PPLTLFormula& f) {
-  auto visitor = NegationTransformer{};
+  auto visitor = PurePastNegationTransformer{};
   return visitor.apply(f);
 }
 
