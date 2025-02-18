@@ -1,6 +1,6 @@
 %option debug
 %option prefix="ppltl"
-%option yyclass="whitemech::lydia::parsers::ppltl::PPTLScanner"
+%option yyclass="whitemech::lydia::parsers::ppltl::PPLTLScanner"
 %option noyywrap
 %option c++
 
@@ -8,13 +8,13 @@
 /* C++ string header, for string ops below */
 #include <string>
 
-/* Implementation of yyFlexPPTLScanner */
+/* Implementation of yyFlexPPLTLScanner */
 #include "lydia/parser/ppltl/scanner_internal.hpp"
 #undef  YY_DECL
-#define YY_DECL int whitemech::lydia::parsers::ppltl::PPTLScanner::yylex( whitemech::lydia::parsers::ppltl::PPLTL_YYSTYPE * lval, whitemech::lydia::parsers::ppltl::PPTLParser::location_type *loc )
+#define YY_DECL int whitemech::lydia::parsers::ppltl::PPLTLScanner::yylex( whitemech::lydia::parsers::ppltl::PPLTL_YYSTYPE * lval, whitemech::lydia::parsers::ppltl::PPLTLParser::location_type *loc )
 
 /* typedef to make the returns for the tokens shorter */
-using token = whitemech::lydia::parsers::ppltl::PPTLParser::token;
+using token = whitemech::lydia::parsers::ppltl::PPLTLParser::token;
 
 /* define yyterminate as this instead of NULL */
 #define yyterminate() return( token::END_OF_FILE )
@@ -41,6 +41,7 @@ using token = whitemech::lydia::parsers::ppltl::PPTLParser::token;
 "S"                         { return token::SINCE; }
 "O"                         { return token::ONCE; }
 "H"                         { return token::HISTORICALLY; }
+"T"                         { return token::TRIGGERED; }
 
 "<=>"|"<->"                 { return token::EQUIVALENCE; }
 "=>"|"->"                   { return token::IMPLICATION; }

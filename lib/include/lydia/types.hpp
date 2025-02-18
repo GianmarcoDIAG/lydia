@@ -98,6 +98,16 @@ class PPLTLSince;
 class PPLTLTriggered;
 class PPLTLOnce;
 class PPLTLHistorically;
+class PPLTLPlusFormula;
+class PPLTLPlusTrue;
+class PPLTLPlusFalse;
+class PPLTLPlusAnd;
+class PPLTLPlusOr;
+class PPLTLPlusNot;
+class PPLTLPlusExists;
+class PPLTLPlusForall;
+class PPLTLPlusExistsForall;
+class PPLTLPlusForallExists;
 
 struct SharedComparator {
   template <typename T>
@@ -127,16 +137,20 @@ typedef std::shared_ptr<const LDLfFormula> ldlf_ptr;
 typedef std::shared_ptr<const LTLfFormula> ltlf_ptr;
 typedef std::shared_ptr<const PPLTLFormula> ppltl_ptr;
 typedef std::shared_ptr<const LTLfPlusFormula> ltlf_plus_ptr;
+typedef std::shared_ptr<const PPLTLPlusFormula> ppltl_plus_ptr;
 typedef std::vector<std::shared_ptr<const LTLfFormula>> vec_ltlf_formulas;
 typedef std::vector<std::shared_ptr<const PPLTLFormula>> vec_ppltl_formulas;
 typedef std::vector<std::shared_ptr<const LDLfFormula>> vec_ldlf_formulas;
 typedef std::vector<std::shared_ptr<const LTLfPlusFormula>> vec_ltlf_plus_formulas;
+typedef std::vector<std::shared_ptr<const PPLTLPlusFormula>> vec_ppltl_plus_formulas;
 typedef std::set<std::shared_ptr<const LTLfFormula>, SharedComparator>
     set_ltlf_formulas;
 typedef std::set<std::shared_ptr<const PPLTLFormula>, SharedComparator>
     set_ppltl_formulas;
 typedef std::set<std::shared_ptr<const LTLfPlusFormula>, SharedComparator>
   set_ltlf_plus_formulas;
+typedef std::set<std::shared_ptr<const PPLTLPlusFormula>, SharedComparator>
+  set_ppltl_plus_formulas;
 typedef std::vector<std::shared_ptr<const LDLfFormula>> vec_formulas;
 typedef std::set<std::shared_ptr<const LDLfFormula>, SharedComparator>
     set_formulas;

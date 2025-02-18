@@ -31,23 +31,23 @@
 
 namespace whitemech::lydia::parsers::ppltl {
 
-class PPTLDriver : public AbstractDriver<For> {
+class PPTLTLDriver : public AbstractDriver {
 private:
   void parse_helper(std::istream& stream);
 
-  LTLfParser* parser = nullptr;
-  LTLfScanner* scanner = nullptr;
+  PPLTLParser* parser = nullptr;
+  PPLTLScanner* scanner = nullptr;
 
 public:
-  ltlf_ptr result;
+  ppltl_ptr result;
 
-  LTLfDriver() : AbstractDriver() {}
+  PPLTLDriver() : AbstractDriver() {}
 
-  explicit LTLfDriver(std::shared_ptr<AstManager> c) : AbstractDriver(c) {}
+  explicit PPLTLDriver(std::shared_ptr<AstManager> c) : AbstractDriver(c) {}
 
-  virtual ~LTLfDriver();
+  virtual ~PPLTLDriver();
 
-  ltlf_ptr get_result() override { return result; }
+  ast_ptr get_result() override { return result; }
 
   /**
    * parse - parse from a file
@@ -61,24 +61,24 @@ public:
    */
   void parse(std::istream& iss);
 
-  ltlf_ptr add_LTLfTrue() const;
-  ltlf_ptr add_LTLfFalse() const;
-  ltlf_ptr add_LTLfAtom(std::string s) const;
-  ltlf_ptr add_LTLfAnd(ltlf_ptr& lhs, ltlf_ptr& rhs) const;
-  ltlf_ptr add_LTLfOr(ltlf_ptr& lhs, ltlf_ptr& rhs) const;
-  ltlf_ptr add_LTLfNot(ltlf_ptr& formula) const;
-  ltlf_ptr add_LTLfNext(ltlf_ptr& formula) const;
-  ltlf_ptr add_LTLfWeakNext(ltlf_ptr& formula) const;
-  ltlf_ptr add_LTLfEventually(ltlf_ptr& formula) const;
-  ltlf_ptr add_LTLfAlways(ltlf_ptr& formula) const;
-  ltlf_ptr add_LTLfUntil(ltlf_ptr& lhs, ltlf_ptr& rhs) const;
-  ltlf_ptr add_LTLfRelease(ltlf_ptr& lhs, ltlf_ptr& rhs) const;
-  ltlf_ptr add_LTLfImplication(ltlf_ptr& lhs, ltlf_ptr& rhs) const;
-  ltlf_ptr add_LTLfEquivalence(ltlf_ptr& lhs, ltlf_ptr& rhs) const;
-  ltlf_ptr add_LTLfPropTrue() const;
-  ltlf_ptr add_LTLfPropFalse() const;
+  ppltl_ptr add_PPLTLTrue() const;
+  ppltl_ptr add_PPLTLFalse() const;
+  ppltl_ptr add_PPLTLAtom(std::string s) const;
+  ppltl_ptr add_PPLTLAnd(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+  ppltl_ptr add_PPLTLOr(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+  ppltl_ptr add_PPLTLNot(ppltl_ptr& formula) const;
+  ppltl_ptr add_PPLTLYesterday(ppltl_ptr& formula) const;
+  ppltl_ptr add_PPLTLWeakYesterday(ppltl_ptr& formula) const;
+  ppltl_ptr add_PPLTLOnce(ppltl_ptr& formula) const;
+  ppltl_ptr add_PPLTLHistorically(ppltl_ptr& formula) const;
+  ppltl_ptr add_PPLTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+  ppltl_ptr add_PPLTLTriggered(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+  ppltl_ptr add_PPLTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+  ppltl_ptr add_PPLTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+  ppltl_ptr add_PPLTLPropTrue() const;
+  ppltl_ptr add_PPLTLPropFalse() const;
 
   std::ostream& print(std::ostream& stream) const;
 };
 
-} // namespace whitemech::lydia::parsers::ltlf
+} // namespace whitemech::lydia::parsers::ppltl

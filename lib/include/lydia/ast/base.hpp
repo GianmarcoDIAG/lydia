@@ -58,6 +58,8 @@ private:
   ldlf_ptr ldlf_false_;
   ltlf_plus_ptr ltlf_plus_true_;
   ltlf_plus_ptr ltlf_plus_false_;
+  ppltl_plus_ptr ppltl_plus_true_;
+  ppltl_plus_ptr ppltl_plus_false_;
   std::unordered_set<basic_ptr, compute_hash, ast_eq_proc> table;
   void init();
 
@@ -155,6 +157,17 @@ public:
   ltlf_plus_ptr makeLtlfPlusForall(const ltlf_ptr& arg);
   ltlf_plus_ptr makeLtlfPlusForallExists(const ltlf_ptr& arg);
   ltlf_plus_ptr makeLtlfPlusExistsForall(const ltlf_ptr& arg);
+
+  ppltl_plus_ptr makePpltlPlusBool(bool x);
+  ppltl_plus_ptr makePpltlPlusTrue();
+  ppltl_plus_ptr makePpltlPlusFalse();
+  ppltl_plus_ptr makePpltlPlusAnd(const set_ppltl_plus_formulas& args);
+  ppltl_plus_ptr makePpltlPlusOr(const set_ppltl_plus_formulas& args);
+  ppltl_plus_ptr makePpltlPlusNot(const ppltl_plus_ptr& arg);
+  ppltl_plus_ptr makePpltlPlusExists(const ppltl_ptr& arg);
+  ppltl_plus_ptr makePpltlPlusForall(const ppltl_ptr& arg);
+  ppltl_plus_ptr makePpltlPlusForallExists(const ppltl_ptr& arg);
+  ppltl_plus_ptr makePpltlPlusExistsForall(const ppltl_ptr& arg);
 };
 
 class Ast : public Basic {

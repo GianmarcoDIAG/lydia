@@ -18,18 +18,18 @@
 #include <cassert>
 #include <fstream>
 
-#include <lydia/parser/ppltl/driver.cpp>
+#include <lydia/parser/ppltl/driver.hpp>
 
 namespace whitemech::lydia::parsers::ppltl {
 
-PPTLDriver::~PPTLDriver() {
+PPLTLDriver::~PPLTLDriver() {
   delete (scanner);
   scanner = nullptr;
   delete (parser);
   parser = nullptr;
 }
 
-void PPTLDriver::parse(const char* const filename) {
+void PPLTLDriver::parse(const char* const filename) {
   assert(filename != nullptr);
   std::ifstream in_file(filename);
   if (!in_file.good()) {
@@ -38,17 +38,17 @@ void PPTLDriver::parse(const char* const filename) {
   parse_helper(in_file);
 }
 
-void PPTLDriver::parse(std::istream& stream) {
+void PPLTLDriver::parse(std::istream& stream) {
   if (!stream.good() && stream.eof()) {
     return;
   }
   parse_helper(stream);
 }
 
-void PPTLDriver::parse_helper(std::istream& stream) {
+void PPLTLDriver::parse_helper(std::istream& stream) {
   delete (scanner);
   try {
-    scanner = new PPTLScanner(&stream);
+    scanner = new PPLTLScanner(&stream);
   } catch (std::bad_alloc& ba) {
     std::cerr << "Failed to allocate scanner: (" << ba.what()
               << "), exiting!\n";
@@ -57,7 +57,7 @@ void PPTLDriver::parse_helper(std::istream& stream) {
 
   delete (parser);
   try {
-    parser = new PPTLParser((*scanner), (*this));
+    parser = new PPLTLDriver((*scanner), (*this));
   } catch (std::bad_alloc& ba) {
     std::cerr << "Failed to allocate parser: (" << ba.what() << "), exiting!\n";
     exit(EXIT_FAILURE);
@@ -69,71 +69,71 @@ void PPTLDriver::parse_helper(std::istream& stream) {
   }
 }
 
-ppltl_ptr PPTLDriver::add_PPTLTrue() const {
+ppltl_ptr PPLTLDriver::add_PPLTLTrue() const {
   return context->makePpltlTrue();
 }
 
-ppltl_ptr PPTLDriver::add_PPTLFalse() const {
+ppltl_ptr PPLTLDriver::add_PPLTLFalse() const {
   return context->makePpltlFalse();
 }
 
-ppltl_ptr PPTLDriver::add_PPTLAtom(std::string s) const {
+ppltl_ptr PPLTLDriver::add_PPLTLAtom(std::string s) const {
   return context->makePpltlAtom(s);
 }
 
-ppltl_ptr PPTLDriver::add_PPTLAnd(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+ppltl_ptr PPLTLDriver::add_PPLTLAnd(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   return context->makePpltlAnd({lhs, rhs});
 }
 
-ppltl_ptr PPTLDriver::add_PPTLOr(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+ppltl_ptr PPLTLDriver::add_PPLTLOr(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   return context->makePpltlOr({lhs, rhs});
 }
 
-ppltl_ptr PPTLDriver::add_PPTLNot(ppltl_ptr& formula) const {
+ppltl_ptr PPLTLDriver::add_PPLTLNot(ppltl_ptr& formula) const {
   return context->makePpltlNot(formula);
 }
 
-ppltl_ptr PPTLDriver::add_PPTLYesterday(ppltl_ptr& formula) const {
+ppltl_ptr PPLTLDriver::add_PPLTLYesterday(ppltl_ptr& formula) const {
   return context->makePpltlYesterday(formula);
 }
 
-ppltl_ptr PPTLDriver::add_PPTLWeakYesterday(ppltl_ptr& formula) const {
+ppltl_ptr PPLTLDriver::add_PPLTLWeakYesterday(ppltl_ptr& formula) const {
   return context->makePpltlWeakYesterday(formula);
 }
 
-ppltl_ptr PPTLDriver::add_PPTLOnce(ppltl_ptr& formula) const {
+ppltl_ptr PPLTLDriver::add_PPLTLOnce(ppltl_ptr& formula) const {
   return context->makePpltlOnce(formula);
 }
 
-ppltl_ptr PPTLDriver::add_PPTLHistorically(ppltl_ptr& formula) const {
+ppltl_ptr PPLTLDriver::add_PPLTLHistorically(ppltl_ptr& formula) const {
   return context->makePpltlHistorically(formula);
 }
 
-ppltl_ptr PPTLDriver::add_PPTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+ppltl_ptr PPLTLDriver::add_PPLTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   return context->makePpltlSince(lhs, rhs);
 }
 
-ppltl_ptr PPTLDriver::add_PPTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+ppltl_ptr PPLTLDriver::add_PPLTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   // Implication a → b is equivalent to ¬a ∨ b
   auto ptr_not_lhs = context->makePpltlNot(lhs);
   return context->makePpltlOr({ptr_not_lhs, rhs});
 }
 
-ppltl_ptr PPTLDriver::add_PPTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+ppltl_ptr PPLTLDriver::add_PPLTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   // Equivalence a ↔ b is equivalent to (a → b) ∧ (b → a)
-  auto ptr_left_implication = this->add_PPTLImplication(lhs, rhs);
-  auto ptr_right_implication = this->add_PPTLImplication(rhs, lhs);
+  auto ptr_left_implication = this->add_PPLTLImplication(lhs, rhs);
+  auto ptr_right_implication = this->add_PPLTLImplication(rhs, lhs);
   return context->makePpltlAnd({ptr_left_implication, ptr_right_implication});
 }
 
-ppltl_ptr PPTLDriver::add_PPTLStart() const {
+ppltl_ptr PPLTLDriver::add_PPLTLStart() const {
   // start ≡ ¬Y(true)
   auto ptr_true = context->makePpltlTrue();
   auto ptr_yesterday_true = context->makePpltlYesterday(ptr_true);
   return context->makePpltlNot(ptr_yesterday_true);
 }
 
-std::ostream& PPTLDriver::print(std::ostream& stream) const {
+std::ostream& PPLTLDriver::print(std::ostream& stream) const {
   stream << this->result->str() << "\n";
   return (stream);
 }

@@ -22,18 +22,18 @@
 
 namespace whitemech::lydia::parsers::ppltlplus {
 
-class PPTLPlusScanner : public ppltlPlusFlexLexer {
+class PPLTLPlusScanner : public ppltlPlusFlexLexer {
 private:
 public:
-  whitemech::lydia::parsers::ppltlplus::PPTLPlus_YYSTYPE* yylval = nullptr;
+  whitemech::lydia::parsers::ppltlplus::PPLTLPlus_YYSTYPE* yylval = nullptr;
 
-  explicit PPTLPlusScanner(std::istream* in): ppltlPlusFlexLexer(in) {};
-  virtual ~PPTLPlusScanner(){};
+  explicit PPLTLPlusScanner(std::istream* in): ppltlPlusFlexLexer(in) {};
+  virtual ~PPLTLPlusScanner(){};
 
   using FlexLexer::yylex;
 
-  virtual int yylex(whitemech::lydia::parsers::ppltlplus::PPTLPlus_YYSTYPE* lval,
-                   PPTLPlusParser::location_type* location);
+  virtual int yylex(whitemech::lydia::parsers::ppltlplus::PPLTLPlus_YYSTYPE* lval,
+                   PPLTLPlusParser::location_type* location);
   // YY_DECL defined in lexer.l
   // Method body created by flex in lexer.yy.cc
 };

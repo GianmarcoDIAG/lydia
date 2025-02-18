@@ -21,22 +21,22 @@
 
 namespace whitemech::lydia::parsers::ppltlplus {
 
-struct PPTLPlus_YYSTYPE {
+struct PPLTLPlus_YYSTYPE {
   // The parser needs information about types it can read
   ppltl_plus_ptr formula;
   ppltl_ptr ppltl_arg;
   std::string symbol_name;
 
   // Constructor
-  PPTLPlus_YYSTYPE() = default;
+  PPLTLPlus_YYSTYPE() = default;
   // Destructor
-  ~PPTLPlus_YYSTYPE() = default;
+  ~PPLTLPlus_YYSTYPE() = default;
   // Copy constructor and assignment
-  PPTLPlus_YYSTYPE(const PPTLPlus_YYSTYPE&) = default;
-  PPTLPlus_YYSTYPE& operator=(const PPTLPlus_YYSTYPE&) = default;
+  PPLTLPlus_YYSTYPE(const PPLTLPlus_YYSTYPE&) = default;
+  PPLTLPlus_YYSTYPE& operator=(const PPLTLPlus_YYSTYPE&) = default;
   // Move constructor and assignment
-  PPTLPlus_YYSTYPE(PPTLPlus_YYSTYPE&&) = default;
-  PPTLPlus_YYSTYPE& operator=(PPTLPlus_YYSTYPE&&) = default;
+  PPLTLPlus_YYSTYPE(PPLTLPlus_YYSTYPE&&) = default;
+  PPLTLPlus_YYSTYPE& operator=(PPLTLPlus_YYSTYPE&&) = default;
 };
 
 } // namespace whitemech::lydia::parsers::ppltlplus

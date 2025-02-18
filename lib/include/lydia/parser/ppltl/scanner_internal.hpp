@@ -22,20 +22,20 @@
 
 namespace whitemech::lydia::parsers::ppltl {
 
-class PPTLScanner : public ppltlFlexLexer {
+class PPLTLScanner : public ppltlFlexLexer {
 private:
 public:
   /* yyval ptr */
   whitemech::lydia::parsers::ppltl::PPLTL_YYSTYPE* yylval = nullptr;
 
-  explicit PPTLScanner(std::istream* in) : ppltlFlexLexer(in){};
-  virtual ~PPTLScanner(){};
+  explicit PPLTLScanner(std::istream* in) : ppltlFlexLexer(in){};
+  virtual ~PPLTLScanner(){};
 
   // get rid of override virtual function warning
   using FlexLexer::yylex;
 
   virtual int yylex(whitemech::lydia::parsers::ppltl::PPLTL_YYSTYPE* lval,
-                    PPTLParser::location_type* location);
+                    PPLTLParser::location_type* location);
   // YY_DECL defined in lexer.l
   // Method body created by flex in lexer.yy.cc
 };

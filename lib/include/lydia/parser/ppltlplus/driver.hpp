@@ -32,47 +32,47 @@
 
 namespace whitemech::lydia::parsers::ppltlplus {
 
-    class PPTLPlusDriver : public AbstractDriver<PPTLPlusFormula> {
+    class PPLTLPlusDriver : public AbstractDriver {
         private:
             void parse_helper(std::istream& stream);
 
-            PPTLPlusScanner* scanner = nullptr;
-            PPTLPlusParser* parser = nullptr;
+            PPLTLPlusScanner* scanner = nullptr;
+            PPLTLPlusParser* parser = nullptr;
 
         public:
             ppltl_plus_ptr result;
-            PPTLPlusDriver() : AbstractDriver() {}
-            explicit PPTLPlusDriver(std::shared_ptr<AstManager> c):
+            PPLTLPlusDriver() : AbstractDriver() {}
+            explicit PPLTLPlusDriver(std::shared_ptr<AstManager> c):
                 AbstractDriver(c) {}
-            virtual ~PPTLPlusDriver();
-            ppltl_plus_ptr get_result() override {return result;}
+            virtual ~PPLTLPlusDriver();
+            ast_ptr get_result() override {return result;}
             void parse(const char* const filename) override;
             void parse(std::istream& iss);
 
-            ppltl_ptr add_PPTLTrue() const;
-            ppltl_ptr add_PPTLFalse() const;
-            ppltl_ptr add_PPTLAtom(std::string s) const;
-            ppltl_ptr add_PPTLAnd(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
-            ppltl_ptr add_PPTLOr(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
-            ppltl_ptr add_PPTLNot(ppltl_ptr& formula) const;
-            ppltl_ptr add_PPTLYesterday(ppltl_ptr& formula) const;
-            ppltl_ptr add_PPTLWeakYesterday(ppltl_ptr& formula) const;
-            ppltl_ptr add_PPTLOnce(ppltl_ptr& formula) const;
-            ppltl_ptr add_PPTLHistorically(ppltl_ptr& formula) const;
-            ppltl_ptr add_PPTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
-            ppltl_ptr add_PPTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
-            ppltl_ptr add_PPTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
-            ppltl_ptr add_PPTLStart() const;
+            ppltl_ptr add_PPLTLTrue() const;
+            ppltl_ptr add_PPLTLFalse() const;
+            ppltl_ptr add_PPLTLAtom(std::string s) const;
+            ppltl_ptr add_PPLTLAnd(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+            ppltl_ptr add_PPLTLOr(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+            ppltl_ptr add_PPLTLNot(ppltl_ptr& formula) const;
+            ppltl_ptr add_PPLTLYesterday(ppltl_ptr& formula) const;
+            ppltl_ptr add_PPLTLWeakYesterday(ppltl_ptr& formula) const;
+            ppltl_ptr add_PPLTLOnce(ppltl_ptr& formula) const;
+            ppltl_ptr add_PPLTLHistorically(ppltl_ptr& formula) const;
+            ppltl_ptr add_PPLTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+            ppltl_ptr add_PPLTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+            ppltl_ptr add_PPLTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+            ppltl_ptr add_PPLTLStart() const;
 
-            ppltl_plus_ptr add_PPTLPlusAnd(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const;
-            ppltl_plus_ptr add_PPTLPlusOr(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const;
-            ppltl_plus_ptr add_PPTLPlusNot(ppltl_plus_ptr& formula) const;
-            ppltl_plus_ptr add_PPTLPlusImplication(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const;
-            ppltl_plus_ptr add_PPTLPlusEquivalence(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const;
-            ppltl_plus_ptr add_PPTLPlusExists(ppltl_ptr& ppltl_formula);
-            ppltl_plus_ptr add_PPTLPlusForall(ppltl_ptr& ppltl_formula);
-            ppltl_plus_ptr add_PPTLPlusExistsForall(ppltl_ptr& ppltl_formula);
-            ppltl_plus_ptr add_PPTLPlusForallExists(ppltl_ptr& ppltl_formula);
+            ppltl_plus_ptr add_PPLTLPlusAnd(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const;
+            ppltl_plus_ptr add_PPLTLPlusOr(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const;
+            ppltl_plus_ptr add_PPLTLPlusNot(ppltl_plus_ptr& formula) const;
+            ppltl_plus_ptr add_PPLTLPlusImplication(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const;
+            ppltl_plus_ptr add_PPLTLPlusEquivalence(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const;
+            ppltl_plus_ptr add_PPLTLPlusExists(ppltl_ptr& ppltl_formula);
+            ppltl_plus_ptr add_PPLTLPlusForall(ppltl_ptr& ppltl_formula);
+            ppltl_plus_ptr add_PPLTLPlusExistsForall(ppltl_ptr& ppltl_formula);
+            ppltl_plus_ptr add_PPLTLPlusForallExists(ppltl_ptr& ppltl_formula);
 
             std::ostream& print(std::ostream& stream) const;
     };

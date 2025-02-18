@@ -91,6 +91,17 @@ public:
   virtual void visit(const LTLfPlusForall&){};
   virtual void visit(const LTLfPlusExistsForall&){};
   virtual void visit(const LTLfPlusForallExists&){};
+
+  // callbacks for PPLTL+
+  virtual void visit(const PPLTLPlusTrue&){};
+  virtual void visit(const PPLTLPlusFalse&){};
+  virtual void visit(const PPLTLPlusAnd&){};
+  virtual void visit(const PPLTLPlusOr&){};
+  virtual void visit(const PPLTLPlusNot&){};
+  virtual void visit(const PPLTLPlusExists&){};
+  virtual void visit(const PPLTLPlusForall&){};
+  virtual void visit(const PPLTLPlusExistsForall&){};
+  virtual void visit(const PPLTLPlusForallExists&){};
 };
 
 } // namespace whitemech::lydia

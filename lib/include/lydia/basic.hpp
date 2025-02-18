@@ -83,6 +83,15 @@ enum TypeID {
   t_PPLTLTriggered,
   t_PPLTLOnce,
   t_PPLTLHistorically,
+  t_PPLTLPlusTrue,
+  t_PPLTLPlusFalse,
+  t_PPLTLPlusAnd,
+  t_PPLTLPlusOr,
+  t_PPLTLPlusNot,
+  t_PPLTLPlusExists,
+  t_PPLTLPlusForall,
+  t_PPLTLPlusExistsForall,
+  t_PPLTLPlusForallExists,
 };
 
 class Visitor;

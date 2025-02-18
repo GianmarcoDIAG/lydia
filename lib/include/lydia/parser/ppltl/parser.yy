@@ -4,15 +4,15 @@
 %defines
 %define api.prefix {ppltl}
 %define api.namespace {whitemech::lydia::parsers::ppltl}
-%define api.parser.class {PPTLParser}
+%define api.parser.class {PPLTLParser}
 
 %code requires{
    #include "lydia/logic/ppltl/base.hpp"
    #include "lydia/parser/ppltl/parser_stype.h"
 
 namespace whitemech::lydia::parsers::ppltl {
-      class PPTLDriver;
-      class PPTLScanner;
+      class PPLTLDriver;
+      class PPLTLScanner;
 }
 
 # ifndef YY_NULLPTR
@@ -25,8 +25,8 @@ namespace whitemech::lydia::parsers::ppltl {
 
 }
 
-%parse-param { PPTLScanner  &scanner  }
-%parse-param { PPTLDriver  &d  }
+%parse-param { PPLTLScanner  &scanner  }
+%parse-param { PPLTLDriver  &d  }
 
 %code{
    #include <iostream>
@@ -62,6 +62,7 @@ namespace whitemech::lydia::parsers::ppltl {
 %token                  SINCE
 %token                  ONCE
 %token                  HISTORICALLY
+%token                  TRIGGERED
 
 %left                   EQUIVALENCE
 %right                  IMPLICATION
@@ -86,26 +87,26 @@ input: ppltl_formula {
     d.result = $$;
 };
 
-ppltl_formula: ppltl_formula EQUIVALENCE ppltl_formula  { $$ = d.add_PPTLEquivalence($1, $3); }
-             | ppltl_formula IMPLICATION ppltl_formula  { $$ = d.add_PPTLImplication($1, $3); }
-             | ppltl_formula SINCE ppltl_formula        { $$ = d.add_PPTLSince($1, $3); }
-             | ppltl_formula OR ppltl_formula           { $$ = d.add_PPTLOr($1, $3); }
-             | ppltl_formula AND ppltl_formula          { $$ = d.add_PPTLAnd($1, $3); }
-             | ONCE ppltl_formula                       { $$ = d.add_PPTLOnce($2); }
-             | HISTORICALLY ppltl_formula               { $$ = d.add_PPTLHistorically($2); }
-             | YESTERDAY ppltl_formula                  { $$ = d.add_PPTLYesterday($2); }
-             | WEAK_YESTERDAY ppltl_formula             { $$ = d.add_PPTLWeakYesterday($2); }
-             | NOT ppltl_formula                        { $$ = d.add_PPTLNot($2); }
-             | TRUE_                                    { $$ = d.add_PPTLTrue(); }
-             | FALSE_                                   { $$ = d.add_PPTLFalse(); }
-             | START                                    { $$ = d.add_PPTLStart(); }
-             | SYMBOL                                   { $$ = d.add_PPTLAtom($1); }
+ppltl_formula: ppltl_formula EQUIVALENCE ppltl_formula  { $$ = d.add_PPLTLEquivalence($1, $3); }
+             | ppltl_formula IMPLICATION ppltl_formula  { $$ = d.add_PPLTLImplication($1, $3); }
+             | ppltl_formula SINCE ppltl_formula        { $$ = d.add_PPLTLSince($1, $3); }
+             | ppltl_formula OR ppltl_formula           { $$ = d.add_PPLTLOr($1, $3); }
+             | ppltl_formula AND ppltl_formula          { $$ = d.add_PPLTLAnd($1, $3); }
+             | ONCE ppltl_formula                       { $$ = d.add_PPLTLOnce($2); }
+             | HISTORICALLY ppltl_formula               { $$ = d.add_PPLTLHistorically($2); }
+             | YESTERDAY ppltl_formula                  { $$ = d.add_PPLTLYesterday($2); }
+             | WEAK_YESTERDAY ppltl_formula             { $$ = d.add_PPLTLWeakYesterday($2); }
+             | NOT ppltl_formula                        { $$ = d.add_PPLTLNot($2); }
+             | TRUE_                                    { $$ = d.add_PPLTLTrue(); }
+             | FALSE_                                   { $$ = d.add_PPLTLFalse(); }
+             | START                                    { $$ = d.add_PPLTLStart(); }
+             | SYMBOL                                   { $$ = d.add_PPLTLAtom($1); }
              ;
 
 ppltl_formula: LPAR ppltl_formula RPAR                 { $$ = $2; };
 
 %%
 
-void whitemech::lydia::parsers::ppltl::PPTLParser::error(const location_type &l, const std::string &err_message) {
+void whitemech::lydia::parsers::ppltl::PPLTLParser::error(const location_type &l, const std::string &err_message) {
    std::cerr << "Error: " << err_message << " at " << l << "\n";
 }
