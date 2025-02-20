@@ -57,7 +57,7 @@ void PPLTLDriver::parse_helper(std::istream& stream) {
 
   delete (parser);
   try {
-    parser = new PPLTLDriver((*scanner), (*this));
+    parser = new PPLTLParser((*scanner), (*this));
   } catch (std::bad_alloc& ba) {
     std::cerr << "Failed to allocate parser: (" << ba.what() << "), exiting!\n";
     exit(EXIT_FAILURE);
@@ -70,67 +70,67 @@ void PPLTLDriver::parse_helper(std::istream& stream) {
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLTrue() const {
-  return context->makePpltlTrue();
+  return context->makePPLTLTrue();
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLFalse() const {
-  return context->makePpltlFalse();
+  return context->makePPLTLFalse();
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLAtom(std::string s) const {
-  return context->makePpltlAtom(s);
+  return context->makePPLTLAtom(s);
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLAnd(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
-  return context->makePpltlAnd({lhs, rhs});
+  return context->makePPLTLAnd({lhs, rhs});
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLOr(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
-  return context->makePpltlOr({lhs, rhs});
+  return context->makePPLTLOr({lhs, rhs});
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLNot(ppltl_ptr& formula) const {
-  return context->makePpltlNot(formula);
+  return context->makePPLTLNot(formula);
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLYesterday(ppltl_ptr& formula) const {
-  return context->makePpltlYesterday(formula);
+  return context->makePPLTLYesterday(formula);
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLWeakYesterday(ppltl_ptr& formula) const {
-  return context->makePpltlWeakYesterday(formula);
+  return context->makePPLTLWeakYesterday(formula);
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLOnce(ppltl_ptr& formula) const {
-  return context->makePpltlOnce(formula);
+  return context->makePPLTLOnce(formula);
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLHistorically(ppltl_ptr& formula) const {
-  return context->makePpltlHistorically(formula);
+  return context->makePPLTLHistorically(formula);
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
-  return context->makePpltlSince(lhs, rhs);
+  return context->makePPLTLSince(lhs, rhs);
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   // Implication a → b is equivalent to ¬a ∨ b
-  auto ptr_not_lhs = context->makePpltlNot(lhs);
-  return context->makePpltlOr({ptr_not_lhs, rhs});
+  auto ptr_not_lhs = context->makePPLTLNot(lhs);
+  return context->makePPLTLOr({ptr_not_lhs, rhs});
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   // Equivalence a ↔ b is equivalent to (a → b) ∧ (b → a)
   auto ptr_left_implication = this->add_PPLTLImplication(lhs, rhs);
   auto ptr_right_implication = this->add_PPLTLImplication(rhs, lhs);
-  return context->makePpltlAnd({ptr_left_implication, ptr_right_implication});
+  return context->makePPLTLAnd({ptr_left_implication, ptr_right_implication});
 }
 
 ppltl_ptr PPLTLDriver::add_PPLTLStart() const {
   // start ≡ ¬Y(true)
-  auto ptr_true = context->makePpltlTrue();
-  auto ptr_yesterday_true = context->makePpltlYesterday(ptr_true);
-  return context->makePpltlNot(ptr_yesterday_true);
+  auto ptr_true = context->makePPLTLTrue();
+  auto ptr_yesterday_true = context->makePPLTLYesterday(ptr_true);
+  return context->makePPLTLNot(ptr_yesterday_true);
 }
 
 std::ostream& PPLTLDriver::print(std::ostream& stream) const {

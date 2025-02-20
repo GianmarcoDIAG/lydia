@@ -22,6 +22,7 @@
 #include <utility>
 
 #include <lydia/ast/base.hpp>
+#include <lydia/logic/ppltl/base.hpp>
 #include <lydia/logic/ldlf/base.hpp>
 #include <lydia/logic/symbol.hpp>
 
@@ -31,7 +32,7 @@
 
 namespace whitemech::lydia::parsers::ppltl {
 
-class PPTLTLDriver : public AbstractDriver {
+class PPLTLDriver : public AbstractDriver {
 private:
   void parse_helper(std::istream& stream);
 
@@ -75,6 +76,7 @@ public:
   ppltl_ptr add_PPLTLTriggered(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
   ppltl_ptr add_PPLTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
   ppltl_ptr add_PPLTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const;
+  ppltl_ptr add_PPLTLStart() const;
   ppltl_ptr add_PPLTLPropTrue() const;
   ppltl_ptr add_PPLTLPropFalse() const;
 
