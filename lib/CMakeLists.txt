@@ -21,16 +21,26 @@
 set (LIB_NAME "lydia")
 
 ## generate lexer and parser
+# LTLf
 FLEX_TARGET(LTLfLydiaLexer include/lydia/parser/ltlf/lexer.l ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ltlf/lexer.yy.cc)
 BISON_TARGET(LTLfLydiaParser include/lydia/parser/ltlf/parser.yy ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ltlf/parser.tab.cc )
 ADD_FLEX_BISON_DEPENDENCY(LTLfLydiaLexer LTLfLydiaParser)
+# LDLf
 FLEX_TARGET(LDLfLydiaLexer include/lydia/parser/ldlf/lexer.l ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ldlf/lexer.yy.cc)
 BISON_TARGET(LDLfLydiaParser include/lydia/parser/ldlf/parser.yy ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ldlf/parser.tab.cc )
 ADD_FLEX_BISON_DEPENDENCY(LDLfLydiaLexer LDLfLydiaParser)
-# LTLf+ (Gianmarco)
+# LTLf+
 FLEX_TARGET(LTLfPlusLydiaLexer include/lydia/parser/ltlfplus/lexer.l ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ltlfplus/lexer.yy.cc)
 BISON_TARGET(LTLfPlusLydiaParser include/lydia/parser/ltlfplus/parser.yy ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ltlfplus/parser.tab.cc )
 ADD_FLEX_BISON_DEPENDENCY(LTLfPlusLydiaLexer LTLfPlusLydiaParser)
+# PPLTL
+FLEX_TARGET(PPLTLLydiaLexer include/lydia/parser/ppltl/lexer.l ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ppltl/lexer.yy.cc)
+BISON_TARGET(PPLTLLydiaParser include/lydia/parser/ppltl/parser.yy ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ppltl/parser.tab.cc )
+ADD_FLEX_BISON_DEPENDENCY(PPLTLLydiaLexer PPLTLLydiaParser)
+# PPLTL+
+FLEX_TARGET(PPLTLPlusLydiaLexer include/lydia/parser/ppltlplus/lexer.l ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ppltlplus/lexer.yy.cc)
+BISON_TARGET(PPLTLPlusLydiaParser include/lydia/parser/ppltlplus/parser.yy ${CMAKE_CURRENT_SOURCE_DIR}/include/lydia/parser/ppltlplus/parser.tab.cc )
+ADD_FLEX_BISON_DEPENDENCY(PPLTLPlusLydiaLexer PPLTLPlusLydiaParser)
 
 #configure directories
 set (LIBRARY_MODULE_PATH "${PROJECT_SOURCE_DIR}/lib")
@@ -56,6 +66,10 @@ add_library (${LIB_NAME}
         ${FLEX_LDLfLydiaLexer_OUTPUTS}
         ${BISON_LTLfPlusLydiaParser_OUTPUTS}
         ${FLEX_LTLfPlusLydiaLexer_OUTPUTS}
+        ${BISON_PPLTLLydiaParser_OUTPUTS}
+        ${FLEX_PPLTLLydiaLexer_OUTPUTS}
+        ${BISON_PPLTLPlusLydiaParser_OUTPUTS}
+        ${FLEX_PPLTLPlusLydiaLexer_OUTPUTS}
         )
 
 target_link_libraries(${LIB_NAME}
