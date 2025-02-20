@@ -33,7 +33,7 @@ namespace lydia {
     void PurePastPlusNegationTransformer::visit(const PPLTLPlusAnd& formula) {
         result = forward_call_in(
             formula, [this](const ppltl_plus_ptr& formula){return apply(*formula); },
-            [formula](const vec_ltlf_plus_formulas& container) {
+            [formula](const vec_ppltl_plus_formulas& container) {
                 set_ppltl_plus_formulas set(container.begin(), container.end());
                 return formula.ctx().makePpltlPlusOr(set);
             }); 
@@ -42,7 +42,7 @@ namespace lydia {
     void PurePastPlusNegationTransformer::visit(const PPLTLPlusOr& formula) {
         result = forward_call_in(
             formula, [this](const ppltl_plus_ptr& formula){return apply(*formula);},
-            [formula](const vec_ltlf_plus_formulas& container) {
+            [formula](const vec_ppltl_plus_formulas& container) {
                 set_ppltl_plus_formulas set(container.begin(), container.end());
                 return formula.ctx().makePpltlPlusAnd(set);
             });
