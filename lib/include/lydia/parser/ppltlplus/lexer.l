@@ -1,6 +1,6 @@
 %option debug
 %option prefix="ppltlPlus"
-%option yyclass="whitemech::lydia::parsers::ppltlplus::PPTLPlusScanner"
+%option yyclass="whitemech::lydia::parsers::ppltlplus::PPLTLPlusScanner"
 %option noyywrap
 %option c++
 
@@ -8,12 +8,12 @@
 /* C++ string header, for string ops below */
 #include <string>
 
-/* Implementation of yyFlexPPTLPlusScanner */
+/* Implementation of yyFlexPPLTLPlusScanner */
 #include "lydia/parser/ppltlplus/scanner_internal.hpp"
 #undef  YY_DECL
-#define YY_DECL int whitemech::lydia::parsers::ppltlplus::PPTLPlusScanner::yylex( whitemech::lydia::parsers::ppltlplus::PPTLPlus_YYSTYPE * lval, whitemech::lydia::parsers::ppltlplus::PPTLPlusParser::location_type *loc )
+#define YY_DECL int whitemech::lydia::parsers::ppltlplus::PPLTLPlusScanner::yylex( whitemech::lydia::parsers::ppltlplus::PPLTLPlus_YYSTYPE * lval, whitemech::lydia::parsers::ppltlplus::PPLTLPlusParser::location_type *loc )
 
-using token = whitemech::lydia::parsers::ppltlplus::PPTLPlusParser::token;
+using token = whitemech::lydia::parsers::ppltlplus::PPLTLPlusParser::token;
 
 /* define yyterminate as this instead of NULL */
 #define yyterminate() return( token::END_OF_FILE )

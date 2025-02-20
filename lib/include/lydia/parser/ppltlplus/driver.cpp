@@ -71,102 +71,102 @@ namespace whitemech::lydia::parsers::ppltlplus {
     }
 
     // PPLTL Base Formula Handling Methods
-    ppltl_ptr PPLTLPlusDriver::add_PPTLTrue() const {
-      return context->makePpltlTrue();
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLTrue() const {
+      return context->makePPLTLTrue();
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLFalse() const {
-      return context->makePpltlFalse();
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLFalse() const {
+      return context->makePPLTLFalse();
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLAtom(std::string s) const {
-      return context->makePpltlAtom(s);
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLAtom(std::string s) const {
+      return context->makePPLTLAtom(s);
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLAnd(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
-      return context->makePpltlAnd({lhs, rhs});
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLAnd(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+      return context->makePPLTLAnd({lhs, rhs});
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLOr(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
-      return context->makePpltlOr({lhs, rhs});
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLOr(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+      return context->makePPLTLOr({lhs, rhs});
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLNot(ppltl_ptr& formula) const {
-      return context->makePpltlNot(formula);
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLNot(ppltl_ptr& formula) const {
+      return context->makePPLTLNot(formula);
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLYesterday(ppltl_ptr& formula) const {
-      return context->makePpltlYesterday(formula);
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLYesterday(ppltl_ptr& formula) const {
+      return context->makePPLTLYesterday(formula);
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLWeakYesterday(ppltl_ptr& formula) const {
-      return context->makePpltlWeakYesterday(formula);
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLWeakYesterday(ppltl_ptr& formula) const {
+      return context->makePPLTLWeakYesterday(formula);
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLOnce(ppltl_ptr& formula) const {
-      return context->makePpltlOnce(formula);
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLOnce(ppltl_ptr& formula) const {
+      return context->makePPLTLOnce(formula);
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLHistorically(ppltl_ptr& formula) const {
-      return context->makePpltlHistorically(formula);
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLHistorically(ppltl_ptr& formula) const {
+      return context->makePPLTLHistorically(formula);
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
-      return context->makePpltlSince(lhs, rhs);
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+      return context->makePPLTLSince(lhs, rhs);
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
-      return context->makePpltlOr({context->makePpltlNot(lhs), rhs});
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+      return context->makePPLTLOr({context->makePPLTLNot(lhs), rhs});
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
-      auto ptr_left_implication = this->add_PPTLImplication(lhs, rhs);
-      auto ptr_right_implication = this->add_PPTLImplication(rhs, lhs);
-      return context->makePpltlAnd({ptr_left_implication, ptr_right_implication});
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLEquivalence(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+      auto ptr_left_implication = this->add_PPLTLImplication(lhs, rhs);
+      auto ptr_right_implication = this->add_PPLTLImplication(rhs, lhs);
+      return context->makePPLTLAnd({ptr_left_implication, ptr_right_implication});
     }
 
-    ppltl_ptr PPLTLPlusDriver::add_PPTLStart() const {
-      auto ptr_true = context->makePpltlTrue();
-      auto ptr_yesterday_true = context->makePpltlYesterday(ptr_true);
-      return context->makePpltlNot(ptr_yesterday_true);
+    ppltl_ptr PPLTLPlusDriver::add_PPLTLStart() const {
+      auto ptr_true = context->makePPLTLTrue();
+      auto ptr_yesterday_true = context->makePPLTLYesterday(ptr_true);
+      return context->makePPLTLNot(ptr_yesterday_true);
     }
 
     // PPTLPlus Formula Handling Methods
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusAnd(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const {
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusAnd(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const {
         return context->makePpltlPlusAnd({lhs, rhs});
     }
 
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusOr(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const {
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusOr(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const {
         return context->makePpltlPlusOr({lhs, rhs});
     }
 
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusImplication(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const {
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusImplication(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const {
         return context->makePpltlPlusOr({context->makePpltlPlusNot(lhs), rhs});
     }
 
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusEquivalence(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const {
-        auto ptr_left_implication = this->add_PPTLPlusImplication(lhs, rhs);
-        auto ptr_right_implication = this->add_PPTLPlusImplication(rhs, lhs);
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusEquivalence(ppltl_plus_ptr& lhs, ppltl_plus_ptr& rhs) const {
+        auto ptr_left_implication = this->add_PPLTLPlusImplication(lhs, rhs);
+        auto ptr_right_implication = this->add_PPLTLPlusImplication(rhs, lhs);
         return context->makePpltlPlusAnd({ptr_left_implication, ptr_right_implication});
     }
 
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusNot(ppltl_plus_ptr& formula) const {
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusNot(ppltl_plus_ptr& formula) const {
         return context->makePpltlPlusNot(formula);
     }
 
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusExists(ppltl_ptr& formula) {
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusExists(ppltl_ptr& formula) {
         return context->makePpltlPlusExists(formula);
     }
 
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusForall(ppltl_ptr& formula) {
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusForall(ppltl_ptr& formula) {
         return context->makePpltlPlusForall(formula);
     }
 
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusExistsForall(ppltl_ptr& formula) {
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusExistsForall(ppltl_ptr& formula) {
         return context->makePpltlPlusExistsForall(formula);
     }
 
-    ppltl_plus_ptr PPLTLPlusDriver::add_PPTLPlusForallExists(ppltl_ptr& formula) {
+    ppltl_plus_ptr PPLTLPlusDriver::add_PPLTLPlusForallExists(ppltl_ptr& formula) {
         return context->makePpltlPlusForallExists(formula);
     }
 
