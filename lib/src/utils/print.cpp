@@ -265,7 +265,7 @@ void StrPrinter::visit(const PPLTLWeakYesterday& x) {
 
 void StrPrinter::visit(const PPLTLSince& x) {
   std::ostringstream s;
-  s << "(" << apply(*x.head()) << ") U (" << apply(*x.tail()) << ")";
+  s << "(" << apply(*x.head()) << ") S (" << apply(*x.tail()) << ")";
   result = s.str();
 }
 
