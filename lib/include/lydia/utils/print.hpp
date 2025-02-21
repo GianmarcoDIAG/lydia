@@ -20,7 +20,11 @@
 #include <lydia/logic/nnf.hpp>
 #include <lydia/logic/pl/base.hpp>
 #include <lydia/visitor.hpp>
+#include <lydia/logic/ltlf/base.hpp>
+#include <lydia/logic/ltlf/base.hpp>
+#include <lydia/logic/ppltl/base.hpp>
 #include <lydia/logic/ltlfplus/base.hpp>
+#include <lydia/logic/ppltlplus/base.hpp>
 
 namespace whitemech::lydia {
 
@@ -73,6 +77,20 @@ public:
 
   void visit(const QuotedFormula&) override{};
 
+  // callbacks for PPLTL
+  void visit(const PPLTLTrue&) override;
+  void visit(const PPLTLFalse&) override;
+  void visit(const PPLTLAtom&) override;
+  void visit(const PPLTLAnd&) override;
+  void visit(const PPLTLOr&) override;
+  void visit(const PPLTLNot&) override;
+  void visit(const PPLTLYesterday&) override;
+  void visit(const PPLTLWeakYesterday&) override;
+  void visit(const PPLTLSince&) override;
+  void visit(const PPLTLTriggered&) override;
+  void visit(const PPLTLOnce&) override;
+  void visit(const PPLTLHistorically&) override;
+
   // callbacks for LTLf+
   void visit(const LTLfPlusTrue&) override;
   void visit(const LTLfPlusFalse&) override;
@@ -83,6 +101,17 @@ public:
   void visit(const LTLfPlusForall&) override;
   void visit(const LTLfPlusExistsForall&) override;
   void visit(const LTLfPlusForallExists&) override;
+
+  // callbacks for PPLTL+
+  void visit(const PPLTLPlusTrue&) override;
+  void visit(const PPLTLPlusFalse&) override;
+  void visit(const PPLTLPlusAnd&) override;
+  void visit(const PPLTLPlusOr&) override;
+  void visit(const PPLTLPlusNot&) override;
+  void visit(const PPLTLPlusExists&) override;
+  void visit(const PPLTLPlusForall&) override;
+  void visit(const PPLTLPlusExistsForall&) override;
+  void visit(const PPLTLPlusForallExists&) override;
 
   std::string apply(const vec_basic& v);
   std::string apply(const set_formulas& v);
