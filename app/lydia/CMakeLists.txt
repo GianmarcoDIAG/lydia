@@ -30,16 +30,19 @@ include_directories (${APP_SRC_PATH} ${LIBRARY_INCLUDE_PATH} ${THIRD_PARTY_INCLU
 
 #set sources
 file (GLOB APP_SOURCE_FILES "${APP_SRC_PATH}/*.cpp")
+list(REMOVE_ITEM APP_SOURCE_FILES "${APP_SRC_PATH}/main.cpp")  
+list(REMOVE_ITEM APP_SOURCE_FILES "${APP_SRC_PATH}/parse.cpp")
 
 #set target executable
-add_executable (${APP_NAME} ${APP_SOURCE_FILES})
-add_executable (parser_tester ${APP_SOURCE_FILES})
+add_executable (${APP_NAME} src/main.cpp ${APP_SOURCE_FILES})
+add_executable (parser_tester src/parse.cpp ${APP_SOURCE_FILES})
 
 #add the library
 target_link_libraries (${APP_NAME} ${LIB_NAME} Threads::Threads)
 target_link_libraries (parser_tester ${LIB_NAME} Threads::Threads)
 
 set_target_properties(${APP_NAME} PROPERTIES OUTPUT_NAME lydia)
+set_target_properties(parser_tester PROPERTIES OUTPUT_NAME parser_tester)
 
 #test
 enable_testing ()

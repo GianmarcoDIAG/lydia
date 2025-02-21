@@ -3,9 +3,9 @@
 #include <iostream>
 #include <istream>
 #include <lydia/dfa/mona_dfa.hpp>
-#include <lydia/parser/ldlf/driver.cpp>
-#include <lydia/parser/ltlf/driver.cpp>
-#include <lydia/parser/ppltl/driver.cpp>
+// #include <lydia/parser/ldlf/driver.hpp>
+// #include <lydia/parser/ltlf/driver.hpp>
+#include <lydia/parser/ppltl/driver.hpp>
 #include <lydia/to_dfa/core.hpp>
 #include <lydia/to_dfa/strategies/compositional/base.hpp>
 #include <lydia/utils/print.hpp>
