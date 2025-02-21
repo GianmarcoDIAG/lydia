@@ -221,6 +221,72 @@ std::string StrPrinter::apply(const Basic& b) {
   return result;
 }
 
+void StrPrinter::visit(const PPLTLTrue& x) {result = "tt";}
+void StrPrinter::visit(const PPLTLFalse& x) {result = "ff";}
+void StrPrinter::visit(const PPLTLAtom& x) {result = (*x.symbol).get_name();}
+void StrPrinter::visit(const PPLTLAnd& x) {
+  std::ostringstream s;
+  auto container = x.get_container();
+  s << "(";
+  s << apply(**container.begin());
+  for (auto it = ++(container.begin()); it != container.end(); ++it) 
+    s << " & " << apply(**it);
+  s << ")";
+  result = s.str();
+}
+void StrPrinter::visit(const PPLTLOr& x) {
+  std::ostringstream s;
+  auto container = x.get_container();
+  s << "(";
+  s << apply(**container.begin());
+  for (auto it = ++(container.begin()); it != container.end(); ++it) 
+    s << " | " << apply(**it);
+  s << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLNot& x) {
+  std::ostringstream s;
+  s << "!(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLYesterday& x) {
+  std::ostringstream s;
+  s << "Y(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLWeakYesterday& x) {
+  std::ostringstream s;
+  s << "WY(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLSince& x) {
+  std::ostringstream s;
+  s << "(" << apply(*x.head()) << ") U (" << apply(*x.tail()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLTriggered& x) {
+  std::ostringstream s;
+  s << "(" << apply(*x.head()) << ") T (" << apply(*x.tail()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLOnce& x) {
+  std::ostringstream s;
+  s << "O(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLHistorically& x) {
+  std::ostringstream s;
+  s << "H(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
 void StrPrinter::visit(const LTLfPlusTrue& x) { result = "tt"; }
 void StrPrinter::visit(const LTLfPlusFalse& x) { result = "ff"; }
 
@@ -275,6 +341,57 @@ void StrPrinter::visit(const LTLfPlusForallExists& x) {
 void StrPrinter::visit(const LTLfPlusExistsForall& x) {
   std::ostringstream s;
   s << "EA(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLPlusTrue& x) {result = "tt";}
+void StrPrinter::visit(const PPLTLPlusFalse& x) {result = "ff";}
+void StrPrinter::visit(const PPLTLPlusAnd& x) {
+  std::ostringstream s;
+  auto container = x.get_container();
+  s << "(";
+  s << apply(**container.begin());
+  for (auto it = ++(container.begin()); it != container.end(); ++it) {
+    s << " & " << apply(**it);
+  }
+  s << ")";
+  result = s.str();
+} 
+void StrPrinter::visit(const PPLTLPlusOr& x) {
+  std::ostringstream s;
+  auto container = x.get_container();
+  s << "(";
+  s << apply(**container.begin());
+  for (auto it = ++(container.begin()); it != container.end(); ++it) {
+    s << " & " << apply(**it);
+  }
+  s << ")";
+  result = s.str();
+}
+void StrPrinter::visit(const PPLTLPlusNot& x) {
+  std::ostringstream s;
+  s << "!(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+void StrPrinter::visit(const PPLTLPlusExists& x) {
+  std::ostringstream s;
+  s << "E(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+void StrPrinter::visit(const PPLTLPlusForall& x) {
+  std::ostringstream s;
+  s << "A(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+void StrPrinter::visit(const PPLTLPlusExistsForall& x) {
+  std::ostringstream s;
+  s << "EA(" << apply(*x.get_arg()) << ")";
+  result = s.str();
+}
+
+void StrPrinter::visit(const PPLTLPlusForallExists& x) {
+  std::ostringstream s;
+  s << "AE(" << apply(*x.get_arg()) << ")";
   result = s.str();
 }
 
