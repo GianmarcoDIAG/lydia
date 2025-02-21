@@ -19,6 +19,7 @@
 #include <lydia/logic/ltlf/base.hpp>
 #include <lydia/logic/ppltl/base.hpp>
 #include <lydia/logic/ltlfplus/base.hpp>
+#include <lydia/logic/ppltlplus/base.hpp>
 #include <lydia/logic/pl/base.hpp>
 #include <lydia/visitor.hpp>
 
@@ -74,6 +75,16 @@ void LTLfPlusExists::accept(Visitor& v) const {v.visit(*this); }
 void LTLfPlusForall::accept(Visitor& v) const {v.visit(*this); }
 void LTLfPlusExistsForall::accept(Visitor& v) const {v.visit(*this); }
 void LTLfPlusForallExists::accept(Visitor& v) const {v.visit(*this); }
+
+void PPLTLPlusTrue::accept(Visitor& v) const { v.visit(*this); }
+void PPLTLPlusFalse::accept(Visitor &v) const { v.visit(*this); }
+void PPLTLPlusAnd::accept(Visitor &v) const { v.visit(*this); }
+void PPLTLPlusOr::accept(Visitor &v) const { v.visit(*this); }
+void PPLTLPlusNot::accept(Visitor &v) const { v.visit(*this); }
+void PPLTLPlusExists::accept(Visitor &v) const { v.visit(*this); }
+void PPLTLPlusForall::accept(Visitor &v) const { v.visit(*this); }
+void PPLTLPlusExistsForall::accept(Visitor &v) const { v.visit(*this); }
+void PPLTLPlusForallExists::accept(Visitor &v) const { v.visit(*this); }
 
 // TODO add other accept methods
 
