@@ -67,6 +67,7 @@ namespace whitemech::lydia::parsers::ppltl {
 %left                   EQUIVALENCE
 %right                  IMPLICATION
 %left                   SINCE
+%left                   TRIGGERED
 %left                   OR
 %left                   AND
 %right                  ONCE
@@ -90,6 +91,7 @@ input: ppltl_formula {
 ppltl_formula: ppltl_formula EQUIVALENCE ppltl_formula  { $$ = d.add_PPLTLEquivalence($1, $3); }
              | ppltl_formula IMPLICATION ppltl_formula  { $$ = d.add_PPLTLImplication($1, $3); }
              | ppltl_formula SINCE ppltl_formula        { $$ = d.add_PPLTLSince($1, $3); }
+             | ppltl_formula TRIGGERED ppltl_formula    { $$ = d.add_PPLTLTriggered($1, $3); }
              | ppltl_formula OR ppltl_formula           { $$ = d.add_PPLTLOr($1, $3); }
              | ppltl_formula AND ppltl_formula          { $$ = d.add_PPLTLAnd($1, $3); }
              | ONCE ppltl_formula                       { $$ = d.add_PPLTLOnce($2); }

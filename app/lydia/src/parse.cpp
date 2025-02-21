@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     driver = std::make_shared<whitemech::lydia::parsers::ppltl::PPLTLDriver>();
 
     // creates and parses PPLTL formula
-    std::string ppltl_formula = "H(a -> Y(b))";
+    std::string ppltl_formula = "(O(a) <-> H(b))";
     std::stringstream formula_stream(ppltl_formula);
     driver->parse(formula_stream);
     auto parsed_formula = driver->get_result();

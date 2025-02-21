@@ -113,6 +113,10 @@ ppltl_ptr PPLTLDriver::add_PPLTLSince(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   return context->makePPLTLSince(lhs, rhs);
 }
 
+ppltl_ptr PPLTLDriver::add_PPLTLTriggered(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
+  return context -> makePPLTLTriggered(lhs, rhs);
+}
+
 ppltl_ptr PPLTLDriver::add_PPLTLImplication(ppltl_ptr& lhs, ppltl_ptr& rhs) const {
   // Implication a → b is equivalent to ¬a ∨ b
   auto ptr_not_lhs = context->makePPLTLNot(lhs);
