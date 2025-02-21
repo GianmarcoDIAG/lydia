@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     driver = std::make_shared<whitemech::lydia::parsers::ppltl::PPLTLDriver>();
 
     // creates and parses PPLTL formula
-    std::string ppltl_formula = "(O(a) <-> H(b))";
+    std::string ppltl_formula = "!(O(a) -> H(b))";
     std::stringstream formula_stream(ppltl_formula);
     driver->parse(formula_stream);
     auto parsed_formula = driver->get_result();
@@ -30,5 +30,11 @@ int main(int argc, char** argv) {
     whitemech::lydia::StrPrinter printer;
     auto printer_result = printer.apply(*ppltl_parsed_formula);
 
-    std::cout << printer_result << std::endl;
+    // get NNF
+    whitemech::lydia::NNFTransformer t;
+    auto nnf_ppltl_parsed_formula =
+        t.apply(*ppltl_parsed_formula);
+    
+    printer_result = printer.apply(*nnf_ppltl_parsed_formula);
+    std::cout << "Input formula: " << ppltl_formula << ". Formula in NNF: " << printer_result << std::endl;
 }
