@@ -253,3 +253,9 @@ lib/include/lydia/parser/ldlf/*.cc
 lib/include/lydia/parser/ldlf/*.hh
 lib/include/lydia/parser/ltlf/*.cc
 lib/include/lydia/parser/ltlf/*.hh
+lib/include/lydia/parser/ppltl/*.cc
+lib/include/lydia/parser/ppltl/*.hh
+lib/include/lydia/parser/ppltlplus/*.cc
+lib/include/lydia/parser/ppltlplus/*.hh
+lib/include/lydia/parser/ltlfplus/*.cc
+lib/include/lydia/parser/ltlfplus/*.hh
