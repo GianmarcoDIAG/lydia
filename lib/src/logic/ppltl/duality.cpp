@@ -83,7 +83,7 @@ void PurePastNegationTransformer::visit(const PPLTLSince& formula) {
       formula, [this](const ppltl_ptr& formula) { return apply(*formula); },
       [formula](const vec_ppltl_formulas& container) {
         assert(container.size() == 2);
-        return formula.ctx().makePPLTLTriggered(container[0], container[1]);
+        return formula.ctx().makePPLTLTriggered(container[1], container[0]);
       });
 }
 void PurePastNegationTransformer::visit(const PPLTLTriggered& formula) {
@@ -91,7 +91,7 @@ void PurePastNegationTransformer::visit(const PPLTLTriggered& formula) {
       formula, [this](const ppltl_ptr& formula) { return apply(*formula); },
       [formula](const vec_ppltl_formulas& container) {
         assert(container.size() == 2);
-        return formula.ctx().makePPLTLSince(container[0], container[1]);
+        return formula.ctx().makePPLTLSince(container[1], container[0]);
       });
 }
 

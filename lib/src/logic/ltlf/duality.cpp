@@ -83,7 +83,7 @@ void NegationTransformer::visit(const LTLfUntil& formula) {
       formula, [this](const ltlf_ptr& formula) { return apply(*formula); },
       [formula](const vec_ltlf_formulas& container) {
         assert(container.size() == 2);
-        return formula.ctx().makeLtlfRelease(container[0], container[1]);
+        return formula.ctx().makeLtlfRelease(container[1], container[0]);
       });
 }
 void NegationTransformer::visit(const LTLfRelease& formula) {
@@ -91,7 +91,7 @@ void NegationTransformer::visit(const LTLfRelease& formula) {
       formula, [this](const ltlf_ptr& formula) { return apply(*formula); },
       [formula](const vec_ltlf_formulas& container) {
         assert(container.size() == 2);
-        return formula.ctx().makeLtlfUntil(container[0], container[1]);
+        return formula.ctx().makeLtlfUntil(container[1], container[0]);
       });
 }
 
