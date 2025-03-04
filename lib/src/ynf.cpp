@@ -31,7 +31,7 @@
     void YNFTransformer::visit(const PPLTLAtom& x) {
         // ynf_result = std::make_shared<PPLTLFormula>(x);
         ynf_result = x.ctx().makePPLTLAtom(x.symbol);
-        atoms.insert(ynf_result);
+        atoms.insert(x);
     }
 
     void YNFTransformer::visit(const PPLTLAnd& x) {
@@ -51,13 +51,13 @@
     void YNFTransformer::visit(const PPLTLYesterday& x) {
         auto arg = apply(*x.get_arg());
         ynf_result = x.ctx().makePPLTLYesterday(x.get_arg());
-        y_sub.insert(ynf_result);
+        y_sub.insert(x);
     }
 
     void YNFTransformer::visit(const PPLTLWeakYesterday& x) {
         auto arg = apply(*x.get_arg());
         ynf_result = x.ctx().makePPLTLWeakYesterday(x.get_arg());
-        wy_sub.insert(ynf_result);    
+        wy_sub.insert(x);    
     }
 
     // YNF(f1 S f2) = YNF(f2) || (YNF(f1) && Y(f1 S f2))
@@ -67,7 +67,8 @@
         auto c = x.get_args(); // {f1, f2}
         auto s = x.ctx().makePPLTLSince(c[0], c[1]); // f1 S f2
         auto yd = x.ctx().makePPLTLYesterday(s); // Y(f1 S f2)
-        y_sub.insert(yd);
+        auto eyd = std::static_pointer_cast<const whitemech::lydia::PPLTLYesterday>(yd);
+        y_sub.insert(*eyd);
         auto d = x.ctx().makePPLTLAnd({arg1, yd}); // (YNF(f1) && Y(f1 S f2))
         ynf_result = x.ctx().makePPLTLOr({arg2, d}); // YNF(f2) || (YNF(f1) && Y(f1 S f2))
     }
@@ -79,7 +80,8 @@
         auto c = x.get_args(); // {f1, f2}
         auto s = x.ctx().makePPLTLTriggered(c[0], c[1]); // f1 T f2
         auto yd = x.ctx().makePPLTLWeakYesterday(s); // WY(f1 T f2)
-        wy_sub.insert(yd);
+        auto eyd = std::static_pointer_cast<const whitemech::lydia::PPLTLWeakYesterday>(yd);
+        wy_sub.insert(*eyd);
         auto d = x.ctx().makePPLTLOr({arg1, yd}); // (YNF(f1) || WY(f1 T f2))
         ynf_result = x.ctx().makePPLTLAnd({arg2, d}); // YNF(f1) && (YNF(f1) || WY(f1 T f2))
     }
@@ -89,7 +91,8 @@
         auto arg = apply(*x.get_arg()); // YNF(f)
         auto o = x.ctx().makePPLTLOnce(x.get_arg()); // O(f)
         auto yo = x.ctx().makePPLTLYesterday(o); // Y(O(f))
-        y_sub.insert(yo);
+        auto eyd = std::static_pointer_cast<const whitemech::lydia::PPLTLYesterday>(yo);
+        y_sub.insert(*eyd);
         ynf_result = x.ctx().makePPLTLOr({arg, yo}); // YNF(f) || Y(O(f))
     }    
 
@@ -98,7 +101,8 @@
         auto arg = apply(*x.get_arg()); // YNF(f)
         auto h = x.ctx().makePPLTLHistorically(x.get_arg()); // H(f)
         auto wyh = x.ctx().makePPLTLWeakYesterday(h); // W(H(f))
-        wy_sub.insert(wyh);
+        auto eyd = std::static_pointer_cast<const whitemech::lydia::PPLTLWeakYesterday>(wyh);
+        wy_sub.insert(*eyd);
         ynf_result = x.ctx().makePPLTLAnd({arg, wyh}); // YNF(f) && WY(H(f))
     }
 
@@ -107,15 +111,15 @@
         ynf_result = x.ctx().makePPLTLNot(apply(*x.get_arg()));
     }
 
-    std::unordered_set<ppltl_ptr> YNFTransformer::get_y_sub() const {
+    std::unordered_set<PPLTLYesterday> YNFTransformer::get_y_sub() const {
         return y_sub;
     }
 
-    std::unordered_set<ppltl_ptr> YNFTransformer::get_wy_sub() const {
+    std::unordered_set<PPLTLWeakYesterday> YNFTransformer::get_wy_sub() const {
         return wy_sub;
     }
 
-    std::unordered_set<ppltl_ptr> YNFTransformer::get_atoms() const {
+    std::unordered_set<PPLTLAtom> YNFTransformer::get_atoms() const {
         return atoms;
     }
 

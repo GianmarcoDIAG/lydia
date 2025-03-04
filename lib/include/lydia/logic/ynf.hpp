@@ -29,11 +29,13 @@ namespace whitemech::lydia {
      */
     class YNFTransformer : public Visitor {
         ppltl_ptr ynf_result;
-        std::unordered_set<ppltl_ptr> y_sub; // Y subformulas
-        std::unordered_set<ppltl_ptr> wy_sub; // WY subformulas
-        std::unordered_set<ppltl_ptr> atoms; 
+        std::unordered_set<PPLTLYesterday> y_sub; // Y subformulas
+        std::unordered_set<PPLTLWeakYesterday> wy_sub; // WY subformulas
+        std::unordered_set<PPLTLAtom> atoms; 
 
         public:
+            YNFTransformer(): ynf_result(nullptr), y_sub({}), wy_sub({}), atoms({}) {};
+
             void visit(const PPLTLTrue&) override;
             void visit(const PPLTLFalse&) override;
             void visit(const PPLTLAtom&) override;
@@ -47,9 +49,9 @@ namespace whitemech::lydia {
             void visit(const PPLTLOnce&) override;
             void visit(const PPLTLHistorically&) override;
 
-            std::unordered_set<ppltl_ptr> get_y_sub() const;
-            std::unordered_set<ppltl_ptr> get_wy_sub() const;
-            std::unordered_set<ppltl_ptr> get_atoms() const;
+            std::unordered_set<PPLTLYesterday> get_y_sub() const;
+            std::unordered_set<PPLTLWeakYesterday> get_wy_sub() const;
+            std::unordered_set<PPLTLAtom> get_atoms() const;
 
         ppltl_ptr apply(const PPLTLFormula& b);
     };

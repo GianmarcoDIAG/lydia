@@ -58,17 +58,17 @@ int main(int argc, char** argv) {
     auto atoms  = yt.get_atoms();
 
     for (const auto& y : y_sub) {
-        auto y_print = printer.apply(*y);
+        auto y_print = printer.apply(y);
         std::cout << "Y subformula: " << y_print << std::endl;
     }
 
     for (const auto& wy : wy_sub) {
-        auto wy_print = printer.apply(*wy);
+        auto wy_print = printer.apply(wy);
         std::cout << "WY subformula: " << wy_print << std::endl;
     }
 
     for (const auto& a : atoms) {
-        auto a_print = printer.apply(*a);
+        auto a_print = printer.apply(a);
         std::cout << "Atom: " << a_print << std::endl;
     }
 }
