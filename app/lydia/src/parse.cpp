@@ -23,7 +23,8 @@ int main(int argc, char** argv) {
     // std::string ppltl_formula = "(a S b)";
     // std::string ppltl_formula = "(a T b)";
     // std::string ppltl_formula = "H(a || b)";
-    std::string ppltl_formula = "!(a S b)";
+    // std::string ppltl_formula = "!(a S b)";
+    std::string ppltl_formula = "Y(a) && (!b S c) && H(d)";
     std::stringstream formula_stream(ppltl_formula);
     driver->parse(formula_stream);
     auto parsed_formula = driver->get_result();
@@ -50,4 +51,24 @@ int main(int argc, char** argv) {
     std::cout << "Input formula: " << ppltl_formula << std::endl;
     std::cout << "Formula in NNF: " << printer_nnf_result << std::endl;
     std::cout << "Formula in YNF: " << printer_ynf_result << std::endl;
+
+    // show subformulas
+    auto y_sub = yt.get_y_sub();
+    auto wy_sub = yt.get_wy_sub();
+    auto atoms  = yt.get_atoms();
+
+    for (const auto& y : y_sub) {
+        auto y_print = printer.apply(*y);
+        std::cout << "Y subformula: " << y_print << std::endl;
+    }
+
+    for (const auto& wy : wy_sub) {
+        auto wy_print = printer.apply(*wy);
+        std::cout << "WY subformula: " << wy_print << std::endl;
+    }
+
+    for (const auto& a : atoms) {
+        auto a_print = printer.apply(*a);
+        std::cout << "Atom: " << a_print << std::endl;
+    }
 }
