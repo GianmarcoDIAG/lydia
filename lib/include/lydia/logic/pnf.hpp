@@ -19,15 +19,10 @@
 #include<lydia/logic/ltlfplus/base.hpp>
 #include<lydia/logic/nnf.hpp>
 #include<lydia/visitor.hpp>
+#include<lydia/logic/pq.hpp>
 
 namespace whitemech::lydia {
 
-    enum PrefixQuantifier {
-        Exists, // 0
-        Forall, // 1
-        ExistsForall, // 2
-        ForallExists // 3
-    };
 
     struct PNFResult {
         // ltlf_plus_ptr pnf_formula_; 
