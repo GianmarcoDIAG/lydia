@@ -21,8 +21,8 @@
 
 namespace whitemech::lydia {
 
-void StrPrinter::visit(const LTLfTrue& x) { result =  "tt"; }
-void StrPrinter::visit(const LTLfFalse& x) { result = "ff"; }
+void StrPrinter::visit(const LTLfTrue& x) { result =  "true"; }
+void StrPrinter::visit(const LTLfFalse& x) { result = "false"; }
 void StrPrinter::visit(const LTLfAtom& x) { result = (*x.symbol).get_name(); }
 void StrPrinter::visit(const LTLfAnd& x) {
   std::ostringstream s;
