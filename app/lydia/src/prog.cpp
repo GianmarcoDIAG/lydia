@@ -65,7 +65,29 @@ int main(int argc, char** argv) {
     whitemech::lydia::History h2 = {i2};
     whitemech::lydia::History h3 = {i3};
     whitemech::lydia::History h4 = {i4};
-    std::vector<whitemech::lydia::History> histories = {h1, h2, h3, h4};
+    // all histories of length 2
+    whitemech::lydia::History h5 = {i1, i1};
+    whitemech::lydia::History h6 = {i1, i2};
+    whitemech::lydia::History h7 = {i1, i3};
+    whitemech::lydia::History h8 = {i1, i4};
+    whitemech::lydia::History h9 = {i2, i1};
+    whitemech::lydia::History h10 = {i2, i2};
+    whitemech::lydia::History h11 = {i2, i3};
+    whitemech::lydia::History h12 = {i2, i4};
+    whitemech::lydia::History h13 = {i3, i1};
+    whitemech::lydia::History h14 = {i3, i2};
+    whitemech::lydia::History h15 = {i3, i3};
+    whitemech::lydia::History h16 = {i3, i4};
+    whitemech::lydia::History h17 = {i4, i1};
+    whitemech::lydia::History h18 = {i4, i2};
+    whitemech::lydia::History h19 = {i4, i3};
+    whitemech::lydia::History h20 = {i4, i4};
+
+    std::vector<whitemech::lydia::History> histories = {h1, h2, h3, h4,
+                                                        h5, h6, h7, h8,
+                                                        h9, h10, h11, h12,
+                                                        h13, h14, h15, h16,
+                                                        h17, h18, h19, h20};
 
     // initialize printer
     whitemech::lydia::StrPrinter printer;
@@ -83,7 +105,7 @@ int main(int argc, char** argv) {
             auto ch = h; // copy history to avoid modifying the original
             int t = 0;
             std::cout << std::endl;
-            std::cout << "---- History ----" << std::endl;
+            std::cout << "---- History (length: " << ch.size() << ") ----" << std::endl;
             for (const auto& pi : ch) {
                 std::cout << "{t = " << t++ << std::endl;
                 for (const auto& atom : pi) {
@@ -99,5 +121,7 @@ int main(int argc, char** argv) {
         }
         std::cout << "---------- TEST CASE END ----------" << std::endl;
         std::cout << std::endl;
+
+        
     }
 }
