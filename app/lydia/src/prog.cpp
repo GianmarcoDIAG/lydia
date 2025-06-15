@@ -121,7 +121,20 @@ int main(int argc, char** argv) {
         }
         std::cout << "---------- TEST CASE END ----------" << std::endl;
         std::cout << std::endl;
-
-        
     }
+
+    std::cout << "---------- TEST LTLfIsFinal ----------" << std::endl;
+    std::cout << std::endl;
+    whitemech::lydia::LTLfIsFinal is_final;
+    for (auto& f : ltlf_test_formulas) {
+        std::cout << "---------- TEST CASE BEGIN ----------" << std::endl;
+        std::cout << "LTLf formula: " << printer.apply(*f) << std::endl;
+        auto nnf = whitemech::lydia::to_nnf(*f);
+        std::cout << "NNF of LTLf formula: " << printer.apply(*nnf) << std::endl;
+        auto epf = whitemech::lydia::progression(*nnf);
+        std::cout << "Is final: " << printer.apply(*epf) << std::endl;
+        std::cout << "---------- TEST CASE END ----------" << std::endl;
+        std::cout << std::endl;
+    }
+    std::cout << "---------- END OF TEST LTLfIsFinal ----------" << std::endl;
 }

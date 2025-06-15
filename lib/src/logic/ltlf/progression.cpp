@@ -133,15 +133,24 @@
 
     void LTLfIsFinal::visit(const LTLfAnd& x) {
         auto container = x.get_container();
-        for (auto& a : container) 
-            if (is_a<LTLfFalse>(*apply(*a))) result_ = x.ctx().makeLtlfFalse();
+        for (auto& a : container) {
+            StrPrinter p;
+            if (is_a<const LTLfFalse>(*apply(*a))) {
+                result_ = x.ctx().makeLtlfFalse();
+                return;
+            }
+        }
         result_ = x.ctx().makeLtlfTrue();  
     }
 
     void LTLfIsFinal::visit(const LTLfOr& x) {
         auto container = x.get_container();
-        for (auto& a : container) 
-            if (is_a<LTLfTrue>(*apply(*a))) result_ = x.ctx().makeLtlfTrue();
+        for (auto& a : container) {
+            if (is_a<const LTLfTrue>(*apply(*a))) {
+                result_ = x.ctx().makeLtlfTrue(); 
+                return;
+            }
+        }
         result_ = x.ctx().makeLtlfFalse();  
     }
 
@@ -191,8 +200,13 @@
         return progression_aux(*nnf, h);
     }
 
-    std::shared_ptr<const LTLfFormula> progression(const LTLfFormula& x) {
+    std::shared_ptr<const LTLfFormula> progression_aux(const LTLfFormula& x) {
         LTLfIsFinal is_final;
         return is_final.apply(x);
+    }
+
+    std::shared_ptr<const LTLfFormula> progression(const LTLfFormula& x) {
+        auto nnf = to_nnf(x);
+        return progression_aux(*nnf);
     }
  }

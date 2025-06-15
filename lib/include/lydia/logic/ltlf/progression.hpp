@@ -26,6 +26,8 @@
 #include <unordered_map>
 #include <vector>
 #include <stdexcept>
+#include <iostream>
+#include <lydia/utils/print.hpp>
 
 
 namespace whitemech::lydia {
@@ -84,5 +86,6 @@ namespace whitemech::lydia {
     std::shared_ptr<const LTLfFormula> progression_aux(const LTLfFormula&, History&);
     std::shared_ptr<const LTLfFormula> progression(const LTLfFormula&, History&);
     // progression wrt empty trace
+    std::shared_ptr<const LTLfFormula> progression_aux(const LTLfFormula&);
     std::shared_ptr<const LTLfFormula> progression(const LTLfFormula&);
 }
