@@ -80,5 +80,6 @@ namespace whitemech::lydia {
             // LTLfIsFinal(const LTLfFormula&);
     };
 
+    std::shared_ptr<const LTLfFormula> progression_aux(const LTLfFormula&, History&);
     std::shared_ptr<const LTLfFormula> progression(const LTLfFormula&, History&);
 }

@@ -107,8 +107,6 @@
     }
 
     ltlf_ptr LTLfProgression::apply(const LTLfFormula& x) {
-        NNFTransformer nnf;
-        auto nnf_x = nnf.apply(x); // convert LTLf in NNF first
         x.accept(*this);
         return result_;
     }
@@ -168,13 +166,11 @@
     }
 
     ltlf_ptr LTLfIsFinal::apply(const LTLfFormula& x) {
-        NNFTransformer nnf;
-        auto nnf_x = nnf.apply(x); // convert LTLf in NNF first
         x.accept(*this);
         return result_;
     }
 
-    std::shared_ptr<const LTLfFormula> progression(const LTLfFormula& x, History& h) {
+    std::shared_ptr<const LTLfFormula> progression_aux(const LTLfFormula& x, History& h) {
         if (h.size() == 1) {
             LTLfProgression p(h[0]);
             return p.apply(x);
@@ -182,8 +178,12 @@
             LTLfProgression p(h[0]);
             auto x_prime = p.apply(x);
             h.erase(h.begin());
-            return progression(*x_prime, h);
+            return progression_aux(*x_prime, h);
         }
+    }
 
+    std::shared_ptr<const LTLfFormula> progression(const LTLfFormula& x, History& h) {
+        auto nnf = to_nnf(x);
+        return progression_aux(*nnf, h);
     }
  }
