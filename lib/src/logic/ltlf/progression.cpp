@@ -37,8 +37,12 @@
 
     // prog(!a, π) = true iff a ∉ π
     void LTLfProgression::visit(const LTLfNot& x) {
-        if (is_a<const LTLfAtom>(*x.get_arg()))
-            result_ = x.ctx().makeLtlfNot(x.get_arg());
+        if (is_a<const LTLfAtom>(*x.get_arg())){
+            auto r = apply(*x.get_arg());
+            if (is_a<const LTLfTrue>(*r)) result_ = x.ctx().makeLtlfFalse();
+            else if (is_a<const LTLfFalse>(*r)) result_ = x.ctx().makeLtlfTrue();
+            else throw std::runtime_error("An unknown error has occured. Termination");
+        }
         else throw std::runtime_error("Formula is NOT in NNF");
     }
 
