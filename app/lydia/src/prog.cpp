@@ -76,6 +76,9 @@ int main(int argc, char** argv) {
         std::cout << "---------- TEST CASE BEGIN ----------" << std::endl;
         auto strf = printer.apply(*f);
         std::cout << "LTLf formula: " << strf << std::endl;
+        auto fnnf = whitemech::lydia::to_nnf(*f);
+        auto strfnnf = printer.apply(*fnnf);
+        std::cout << "NNF of LTLf formula: " << strfnnf << std::endl;
         for (auto& h : histories) {
             auto ch = h; // copy history to avoid modifying the original
             int t = 0;
