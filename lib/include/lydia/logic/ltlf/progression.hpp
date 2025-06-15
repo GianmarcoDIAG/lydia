@@ -80,6 +80,9 @@ namespace whitemech::lydia {
             // LTLfIsFinal(const LTLfFormula&);
     };
 
+    // progression wrt history (interpretation is a history of length 1)
     std::shared_ptr<const LTLfFormula> progression_aux(const LTLfFormula&, History&);
     std::shared_ptr<const LTLfFormula> progression(const LTLfFormula&, History&);
+    // progression wrt empty trace
+    std::shared_ptr<const LTLfFormula> progression(const LTLfFormula&);
 }

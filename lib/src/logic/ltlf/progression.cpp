@@ -190,4 +190,9 @@
         auto nnf = to_nnf(x);
         return progression_aux(*nnf, h);
     }
+
+    std::shared_ptr<const LTLfFormula> progression(const LTLfFormula& x) {
+        LTLfIsFinal is_final;
+        return is_final.apply(x);
+    }
  }
