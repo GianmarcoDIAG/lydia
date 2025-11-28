@@ -64,46 +64,58 @@
         result_ = x.ctx().makeLtlfOr(new_container);
     }
 
-    // prog(X[!]φ, π) = φ
+    // prog(○φ, π) = φ ∧ not_end
     void LTLfProgression::visit(const LTLfNext& x) {
-        result_ = x.get_arg();
+        auto arg = x.get_arg();
+        auto not_end = x.ctx().makeLtlfNotEnd();
+        result_ = x.ctx().makeLtlfAnd({arg, not_end});
     }
 
-    // prog(Xφ, π) = φ
+    // prog(●φ, π) = φ v end
     void LTLfProgression::visit(const LTLfWeakNext& x) {
-        result_ = x.get_arg();
+        auto arg = x.get_arg();
+        auto end = x.ctx().makeLtlfEnd();
+        result_ = x.ctx().makeLtlfOr({arg, end});
     }
 
-    // prog(◇φ, π) = prog(φ, π) v ◇φ
+    // prog(◇φ, π) = prog(φ, π) v prog(○(◇φ), π)
     void LTLfProgression::visit(const LTLfEventually& x) {
         auto arg1 = apply(*x.get_arg()); // prog(φ)
         auto arg2 = x.ctx().makeLtlfEventually(x.get_arg()); // ◇φ
-        result_ = x.ctx().makeLtlfOr({arg1, arg2}); // prog(φ) v ◇φ
+        auto sxarg2 = x.ctx().makeLtlfNext(arg2); // ○(◇φ)
+        auto psxarg2 = apply(*sxarg2); // prog(○(◇φ), π)
+        result_ = x.ctx().makeLtlfOr({arg1, psxarg2}); // prog(φ, π) v prog(○(◇φ), π)
     }
 
-    // prog(□φ, π) = prog(φ, π) ∧ □φ
+    // prog(□φ, π) = prog(φ, π) ∧ prog(●(□φ), π) 
     void LTLfProgression::visit(const LTLfAlways& x) {
         auto arg1 = apply(*x.get_arg()); // prog(φ, π)
         auto arg2 = x.ctx().makeLtlfAlways(x.get_arg()); // □φ
-        result_ = x.ctx().makeLtlfAnd({arg1, arg2}); // prog(φ, π) ∧ □φ
+        auto xarg2 = x.ctx().makeLtlfWeakNext(arg2); // ●(□φ)
+        auto pxarg2 = apply(*xarg2); // prog(●(□φ), π)
+        result_ = x.ctx().makeLtlfAnd({arg1, pxarg2}); // prog(φ, π) ∧ prog(●(□φ), π)
     }
 
-    // prog(φ1 U φ2, π) = prog(φ2, π) v (prog(φ1, π) ∧ φ1 U φ2)
+    // prog(φ1 U φ2, π) = prog(φ2, π) v (prog(φ1, π) ∧ prog(○(φ1 U φ2), π))
     void LTLfProgression::visit(const LTLfUntil& x) {
         auto p1 = apply(*x.get_args()[0]); // prog(φ1, π)
         auto p2 = apply(*x.get_args()[1]); // prog(φ2, π)
         auto u = x.ctx().makeLtlfUntil(x.get_args()[0], x.get_args()[1]); // φ1 U φ2
-        auto a = x.ctx().makeLtlfAnd({p1, u}); // (prog(φ1, π) ∧ φ1 U φ2)
-        result_ = x.ctx().makeLtlfOr({p2, a}); // prog(φ2, π) v (prog(φ1, π) ∧ φ1 U φ2)
+        auto sxu = x.ctx().makeLtlfNext(u); // ○(φ1 U φ2)
+        auto psxu = apply(*sxu); // prog(○(φ1 U φ2), π)
+        auto a = x.ctx().makeLtlfAnd({p1, psxu}); // (prog(φ1, π) ∧ prog(○(φ1 U φ2), π))
+        result_ = x.ctx().makeLtlfOr({p2, a}); // prog(φ2, π) v (prog(φ1, π) ∧ prog(○(φ1 U φ2), π))
     }
 
-    // prog(φ1 R φ2, π) = prog(φ2, v) ∧ (prog(φ1, π) v φ1 R φ2)
+    // prog(φ1 R φ2, π) = prog(φ2, v) ∧ (prog(φ1, π) v prog(●(φ1 R φ2), π))
     void LTLfProgression::visit(const LTLfRelease& x) {
         auto p1 = apply(*x.get_args()[0]); // prog(φ1, π)
         auto p2 = apply(*x.get_args()[1]); // prog(φ2, π)
         auto r = x.ctx().makeLtlfRelease(x.get_args()[0], x.get_args()[1]); // φ1 R φ2
-        auto o = x.ctx().makeLtlfOr({p1, r}); // (prog(φ1, π) v φ1 R φ2)
-        result_ = x.ctx().makeLtlfAnd({p2, o}); // prog(φ2, v) ∧ (prog(φ1, π) v φ1 R φ2)
+        auto xr = x.ctx().makeLtlfWeakNext(r); // ●(φ1 R φ2)
+        auto pxr = apply(*xr); // prog(●(φ1 R φ2), π)
+        auto o = x.ctx().makeLtlfOr({p1, pxr}); // (prog(φ1, π) v prog(●(φ1 R φ2), π)
+        result_ = x.ctx().makeLtlfAnd({p2, o}); // prog(φ2, v) ∧ (prog(φ1, π) v prog(●(φ1 R φ2), π)
     }
 
     LTLfProgression::LTLfProgression(const Interpretation& pi) {
